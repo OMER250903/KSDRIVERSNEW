@@ -14,7 +14,8 @@ function readJSON(filepath) {
 const moment = require('moment-timezone');
 const israelTime = moment.tz(new Date(), 'Asia/Jerusalem').format('HH:mm');
 app.use(express.json()); // ← ואז משתמשים
-  const fullPath = filepath if filepath.startsWith('/data/') else '/data/' + filepath;
+  const fullPath = filepath.startsWith('/data/') ? filepath : '/data/' + filepath;
+
   if (!fs.existsSync(fullPath)) return [];
   const data = fs.readFileSync(fullPath, 'utf-8');
   return JSON.parse(data);

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>הוסף תיאום לנהג</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f6fa;
+      padding: 40px;
+    }
+    .form-card {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #004080;
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #004080;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #002f5e;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #004080;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-card">
+    <h1>הוסף תיאום חדש עבור <%= driver.name %></h1>
+
+    <% if (errorMessage) { %>
+      <div class="error"><%= errorMessage %></div>
+    <% } %>
+
+    <form action="/driver/<%= driverId %>/add-coordination" method="POST">
+      <label>מספר תיאום</label>
+      <input type="text" name="coordinationNumber" required>
+
+      <label>סוג סחורה</label>
+      <input type="text" name="goodsType">
+
+      <label>מספר משטחים</label>
+      <input type="text" name="palletCount">
+
+      <label>מספר משאית</label>
+      <input type="text" name="truckNumber">
+
+      <label>ארגון תורם</label>
+      <input type="text" name="donorOrg">
+      
+      <label>נתיב</label>
+<input type="text" name="route">
+
+      <button class="btn" type="submit">💾 שמור תיאום</button>
+    </form>
+
+    <a class="back-link" href="/driver/<%= driverId %>">← חזרה לכרטיס הנהג</a>
+  </div>
+
+</body>
+</html>

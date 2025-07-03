@@ -1,0 +1,123 @@
+[
+  {
+    "name": "פיני שלב",
+    "idNumber": "16805939",
+    "phone": "052-226-4377",
+    "coordinationNumber": "6",
+    "goodsType": "מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "09:55",
+    "gatePassPrinted": false
+  },
+  {
+    "name": "דורון יחיא",
+    "idNumber": "24803942",
+    "phone": "-",
+    "coordinationNumber": "4",
+    "goodsType": "מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "07:20",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "אחמד קרינאוי",
+    "idNumber": "324902527",
+    "phone": "054-785-7042",
+    "coordinationNumber": "9",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "07:57",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "דן אהרונוביץ",
+    "idNumber": "28091494",
+    "phone": "052-537-4201",
+    "coordinationNumber": "5",
+    "goodsType": "מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "08:36",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "גמאל הוזייל",
+    "idNumber": "37282985",
+    "phone": "050-721-8835",
+    "coordinationNumber": "11",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "09:57",
+    "gatePassPrinted": false
+  },
+  {
+    "name": "זוארמי ברוך",
+    "idNumber": "58693110",
+    "phone": "058-542-1440",
+    "coordinationNumber": "2",
+    "goodsType": "מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "09:55",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "שאהר סנקרט",
+    "idNumber": "80885817",
+    "phone": "052-675-9625",
+    "coordinationNumber": "7",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "08:35",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "חסאם גאבר",
+    "idNumber": "80959604",
+    "phone": "052-548-6685",
+    "coordinationNumber": "8",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "07:23",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "סעיד קרינאוי",
+    "idNumber": "208892224",
+    "phone": "054-351-5183",
+    "coordinationNumber": "10",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "08:05",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "ירין ביטון",
+    "idNumber": "314811753",
+    "phone": "-",
+    "coordinationNumber": "3",
+    "goodsType": "סלי מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "06:26",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "עודה אל קרעאן",
+    "idNumber": "26343533",
+    "phone": "053-320-4152",
+    "coordinationNumber": "1",
+    "goodsType": "מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "08:39",
+    "gatePassPrinted": false
+  }
+]

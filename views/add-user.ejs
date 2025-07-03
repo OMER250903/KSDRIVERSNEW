@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>הוספת משתמש חדש</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      font-family: 'Assistant', sans-serif;
+      background-color: #f3f6fa;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #003f8a;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #003f8a;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    h3 {
+      margin-top: 30px;
+      color: #003f8a;
+    }
+
+    input[type="checkbox"] {
+      margin-left: 6px;
+    }
+
+    button[type="submit"] {
+      background-color: #004080;
+      color: white;
+      padding: 12px 24px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0059b3;
+    }
+
+    a {
+      color: #003f8a;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 30px;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>הוספת משתמש חדש</h1>
+
+    <% if (errorMessage) { %>
+      <div class="error-message"><%= errorMessage %></div>
+    <% } %>
+
+    <form action="/add-user" method="POST">
+      <div>
+        <label for="username">שם משתמש:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div>
+        <label for="password">סיסמה:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <div>
+        <label for="confirmPassword">אימות סיסמה:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+      </div>
+
+      <div>
+        <label for="role">הרשאה:</label>
+        <select id="role" name="role" required>
+          <option value="">-- בחר תפקיד --</option>
+          <option value="admin">מנהל מערכת</option>
+          <option value="supervisor">מפקח</option>
+          <option value="bakara">בקרה</option>
+          <option value="visitor">צופה</option>
+        </select>
+      </div>
+
+      <div>
+        <h3>בחר הרשאות:</h3>
+        <%
+          const permNames = {
+            'add-driver': 'הוסף נהג',
+            'edit-driver': 'ערוך נהג',
+            'delete-driver': 'מחק נהג',
+            'upload-coordinations': 'העלה קובץ תיאומים',
+            'upload-drivers': 'העלה קובץ נהגים',
+            'toggle-status': 'סמן מעבר בקרה',
+            'manage-users': 'ניהול משתמשים',
+            'view-statistics': 'צפייה בסטטיסטיקות',
+            'add-coordination': 'הוסף תיאום'
+          };
+          const allPermissions = Object.keys(permNames);
+        %>
+        <% allPermissions.forEach(permission => { %>
+          <label>
+            <input type="checkbox" name="permissions" value="<%= permission %>" 
+              <% if (userPermissions && userPermissions.includes(permission)) { %>checked<% } %> 
+            >
+            <%= permNames[permission] %>
+          </label><br>
+        <% }) %>
+      </div>
+
+      <br>
+      <button type="submit">➕ צור משתמש</button>
+    </form>
+
+    <a href="/manage-users">⬅ חזרה</a>
+  </div>
+</body>
+</html>

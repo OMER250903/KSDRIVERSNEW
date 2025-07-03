@@ -1,0 +1,547 @@
+  <!DOCTYPE html>
+  <html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <title>כרטיס נהג</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 20px 40px 40px;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f3f6fa;
+        direction: rtl;
+      }
+
+      .driver-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+max-width: 80%;
+        margin: 20px auto;
+        padding: 30px 40px;
+        display: flex;
+        flex-direction: column;
+        min-height: 550px;
+        gap: 10px;
+      }
+
+      .top-row {
+        width: 100%;
+        text-align: left;
+      }
+
+      .back-link {
+        font-weight: bold;
+        color: #003f8a;
+        text-decoration: none;
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: inline-block;
+      }
+
+      .driver-header {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+      }
+
+      .driver-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
+        object-fit: cover;
+      }
+
+      .driver-main h1 {
+        font-size: 26px;
+        margin: 0;
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .status i {
+        margin-left: 8px;
+      }
+
+      .info-grid, .coord-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+        margin-top: 10px;
+      }
+
+      .info-item {
+        font-size: 14px;
+      }
+
+      .info-item label {
+        display: block;
+        color: #777;
+        font-weight: 500;
+      }
+
+      .info-item span {
+        font-weight: bold;
+        color: #1e1e1e;
+      }
+
+      .divider {
+        margin: 20px 0 10px;
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4px;
+      }
+
+      .styled-checkbox {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .styled-checkbox input[type="checkbox"] {
+        display: none;
+      }
+
+      .styled-checkbox .checkmark {
+        width: 22px;
+        height: 22px;
+        border: 2px solid #43a047;
+        background-color: transparent;
+        border-radius: 6px;
+        position: relative;
+        transition: 0.3s ease;
+      }
+
+      .styled-checkbox input[type="checkbox"]:checked + .checkmark {
+        background-color: #43a047;
+      }
+
+      .styled-checkbox .checkmark::after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+
+      .styled-checkbox input[type="checkbox"]:checked + .checkmark::after {
+        display: block;
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 12px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .exit-time {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #444;
+        margin-right: 38px;
+        font-weight: 500;
+      }
+
+      .actions {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .right-actions, .left-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        background-color: #fff;
+        border: 1px solid #b0c4de;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 140px;
+        font-family: 'Segoe UI', sans-serif;
+        transition: background 0.3s;
+      }
+
+      .btn.edit {
+        background-color: #003f8a;
+        color: white;
+        border-color: #003f8a;
+      }
+
+      .btn.upload {
+        background-color: #00897b;
+        color: white;
+        border-color: #00897b;
+      }
+
+      .btn.delete {
+        background-color: #c62828;
+        color: white;
+        border-color: #c62828;
+      }
+.transfer-form {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.print-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 18px;
+  color: #2e7d32;
+  transition: 0.3s ease;
+}
+
+.print-icon:hover {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+  cursor: pointer;
+}
+
+
+.transfer-form input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  width: 200px;
+}
+
+.transfer-form button {
+  background-color: #004080;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.transfer-form button:hover {
+  background-color: #002f5e;
+}
+
+table.coord-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  background-color: white;
+}
+
+table.coord-table th, table.coord-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+table.coord-table th {
+  background-color: #004080;
+  color: white;
+  font-weight: 600;
+}
+
+table.coord-table tbody tr:hover {
+  background-color: #f0f4ff;
+}
+.print-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  padding: 6px;
+  transition: background-color 0.3s;
+  font-size: 18px;
+  color: #1565c0;
+}
+
+.print-icon:hover {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+  cursor: pointer;
+}
+.coordination-cell {
+  position: relative;
+  padding-right: 28px;
+}
+
+.add-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: #004080;
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.full-width {
+  width: 100%;
+  table-layout: fixed;
+}
+.full-width th, .full-width td {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+
+@media (max-width: 768px) {
+  .coordination-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .coordination-table th,
+  .coordination-table td {
+    white-space: nowrap;
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+}
+
+
+
+
+      .btn.gatepass {
+        background-color: #37474f;
+        color: white;
+        border-color: #37474f;
+      }
+    </style>
+  </head>
+  <body>
+
+  <div class="driver-card">
+    <div class="top-row">
+      <a href="/" class="back-link">🔙 חזרה לרשימת נהגים</a>
+    </div>
+
+    <div class="driver-header">
+      <img src="<%= driver.image || '/images/driver-default.jpg' %>" alt="תמונת נהג">
+      <div class="driver-main">
+        <h1><%= driver.name %></h1>
+        <div class="status" style="color: <%= driver.status === 'מאושר' ? '#2e7d32' : driver.status === 'מנוע' ? '#c62828' : '#777' %>">
+          <i class="fas <%= driver.status === 'מאושר' ? 'fa-check-circle' : driver.status === 'מנוע' ? 'fa-times-circle' : 'fa-question-circle' %>"></i>
+          <%= driver.status === 'מאושר' ? 'מאושר' : (driver.status === 'מנוע' ? 'מנוע' : 'לא ידוע') %>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item"><label>ת.ז</label><span><%= driver.idNumber %></span></div>
+      <div class="info-item"><label>טלפון</label><span><%= driver.phone %></span></div>
+      <div class="info-item"><label>טלפון מעסיק</label><span><%= driver.employerPhone %></span></div>
+      <div class="info-item"><label>מעסיק</label><span><%= driver.employer %></span></div>
+    </div>
+
+    <div class="divider">📦 רשימת תיאומים</div>
+
+    <% if (Array.isArray(driver.coordinations) && driver.coordinations.length > 0) { %>
+<% if (Array.isArray(driver.coordinations) && driver.coordinations.length > 0) { %>
+<table class="coord-table full-width">
+  <thead>
+    <tr>
+      <th>מספר תיאום</th>
+      <th>סוג סחורה</th>
+      <th>מספר משטחים</th>
+      <th>מספר משאית</th>
+      <th>ארגון תורם</th>
+      <th>נתיב</th>
+      <th>נבדק</th>
+      <th>נבדק על ידי</th>
+      <th>שעה</th>
+      <th>🖨️</th>
+      <th>⚙️</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% driver.coordinations.forEach((coord, index) => { %>
+      <tr>
+<td>
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <span><%= coord.coordinationNumber %></span>
+    <button onclick="toggleTransferForm(<%= index %>)"
+            style="background:none; border:none; font-size:16px; cursor:pointer; color:#00796b;"
+            title="העבר תיאום">
+      🔁
+    </button>
+  </div>
+
+  <!-- טופס ההעברה (יופיע כשתלחץ על 🔁) -->
+  <form id="transferForm<%= index %>" class="transfer-form"
+        action="/transfer-coordination/<%= driverId %>/<%= index %>"
+        method="POST"
+        style="display:none; margin-top:6px;">
+    <input type="text" name="targetIdNumber" placeholder="ת.ז נהג יעד" required
+           style="width: 130px; font-size: 13px;">
+    <button type="submit" style="padding: 4px 8px; font-size: 12px;">✔️</button>
+  </form>
+</td>
+        <td><%= coord.goodsType %></td>
+        <td><%= coord.palletCount %></td>
+<td style="white-space: normal; word-break: break-word;"><%= coord.truckNumber %></td>
+        <td><%= coord.donorOrg %></td>
+        <td><%= coord.route || '-' %></td>
+        <td>
+          <form action="/update-coordination-status/<%= driverId %>/<%= index %>" method="POST">
+            <label style="display:flex; align-items:center; gap:5px;">
+              <input type="checkbox" name="checked" onchange="this.form.submit()" <%= coord.passed ? 'checked' : '' %> >
+              נבדק
+            </label>
+          </form>
+        </td>
+        <td><%= coord.checkedBy || '---' %></td>
+        <td><%= coord.passedAt || '---' %></td>
+        <td>
+          <% if (coord.passed) { %>
+            <a href="/driver/<%= driverId %>/coord-gatepass/<%= index %>" target="_blank" title="הפק Gate Pass">
+              <i class="fas fa-print" style="color: #666; font-size: 18px;"></i>
+            </a>
+          <% } else { %>
+            <span style="color: #ccc;">—</span>
+          <% } %>
+        </td>
+<td style="height: 50px;">
+  <div style="display: flex; align-items: center; justify-content: center; height: 100%; gap: 10px;">
+          <form action="/driver/<%= driverId %>/delete-coordination/<%= index %>" method="POST" onsubmit="return confirm('למחוק תיאום זה?')">
+            <button type="submit" style="background:none; border:none; color:#c62828; font-size:18px;">🗑️</button>
+          </form>
+         <a href="/driver/<%= driverId %>/add-coordination" style="background:none; border:none; color:#004080; font-size:18px; text-decoration:none;">➕</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+<!-- אין תיאומים בכלל – מציג כפתור הוספה גדול -->
+<a href="/driver/<%= driverId %>/add-coordination" class="btn upload" style="background-color:#004080; color:white; text-decoration: none;">
+  ➕ הוסף תיאום חדש
+</a>
+
+<% } %>
+
+   
+
+
+      
+    <% } else { %>
+      <div class="coord-grid">
+        <div class="info-item"><label>מספר תיאום</label><span><%= driver.coordinationNumber || '---' %></span></div>
+        <div class="info-item"><label>סוג סחורה</label><span><%= driver.goodsType || '---' %></span></div>
+        <div class="info-item"><label>מספר משאית</label><span><%= driver.truckNumber || '---' %></span></div>
+        <div class="info-item"><label>מספר משטחים</label><span><%= driver.palletCount || '---' %></span></div>
+        <div class="info-item"><label>ארגון תורם</label><span><%= driver.donorOrg || '---' %></span></div>
+      </div>
+    <% } %>
+
+    
+
+    <div class="actions">
+      <div class="right-actions">
+        <form action="/edit-driver/<%= driverId %>">
+          <button class="btn edit"><i class="fas fa-pen"></i> ערוך פרטים</button>
+        </form>
+
+        <form action="/upload-image/<%= driverId %>" method="POST" enctype="multipart/form-data">
+          <input type="file" id="file" name="driverImage" style="display:none" onchange="this.form.submit()">
+          <label for="file" class="btn upload"><i class="fas fa-upload"></i> העלה תמונה</label>
+        </form>
+
+<form action="/toggle-flag/<%= driverId %>" method="POST">
+  <button class="btn" style="background-color: #ff9800; color: white; border-color: #ff9800;">
+    <% if (driver.flagged) { %>
+      ❌ הסר דגל
+    <% } else { %>
+      🚩 סמן דגל
+    <% } %>
+  </button>
+</form>
+
+
+
+
+      <form action="/delete-driver/<%= driverId %>" method="POST" onsubmit="return confirm('האם אתה בטוח שברצונך למחוק את הנהג?')">
+  <button class="btn delete"><i class="fas fa-trash"></i> מחק נהג</button>
+</form>
+      </div>
+
+  
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('driverStatusCheckbox').addEventListener('change', async function () {
+      const isChecked = this.checked;
+
+      await fetch('/save-checkbox/<%= driverId %>', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ driverStatus: isChecked ? 'on' : '' })
+      });
+
+      if (isChecked) {
+        await fetch('/mark-statistics/<%= driverId %>', { method: 'POST' });
+      }
+
+      location.reload();
+    });
+  </script>
+<script>
+  function toggleTransferForm(index) {
+    const form = document.getElementById('transferForm' + index);
+    if (form) {
+      form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+    }
+  }
+</script>
+
+
+
+  </body>
+  </html>

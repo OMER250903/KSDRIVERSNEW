@@ -1,0 +1,322 @@
+  /* ייבוא פונט */
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap');
+
+/* כללי */
+body {
+    font-family: 'Assistant', sans-serif;
+    background-color: #0d1117;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+}
+
+/* כותרת ולוגו */
+.main-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d2c52;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.page-title {
+    color: white;
+    font-size: 45px;
+    margin: 0;
+}
+
+/* הלוגו מקובע לימין */
+.logo {
+    height: 60px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+/* קונטיינר */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* חיפוש */
+.search-form {
+   .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.search-container input[type="text"] {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    color: #333;
+}
+
+.search-container button {
+    background-color: #0d47a1; /* כחול כהה */
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+.search-container button:hover {
+    background-color: #1565c0; /* כחול בהיר יותר */
+}
+
+}
+
+.search-form input[type="text"] {
+    padding: 8px;
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-form button {
+    padding: 8px 15px;
+    margin-right: 5px;
+    border: none;
+    background-color: #0d47a1;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-form button:hover {
+    background-color: #1565c0;
+}
+
+/* כפתורי פעולות */
+.actions {
+    text-align: center;
+margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.actions form {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.actions button {
+    background-color: #0d47a1;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+ font-family: inherit;
+    font-size: 16px;
+}
+
+.actions button:hover {
+    background-color: #1565c0;
+}
+
+/* טבלה */
+.drivers-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #161b22;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.drivers-table th, .drivers-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #00bcd4;
+    color: #e0e0e0;
+}
+
+.drivers-table th {
+    background-color: #0d2c52;
+    color: white;
+}
+
+.drivers-table tr:hover {
+    background-color: #1e2a38;
+}
+
+/* קישור שם נהג */
+.driver-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.driver-link:hover {
+    text-decoration: underline;
+}
+
+/* תחתית עמוד */
+.bottom-links {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.bottom-links a {
+    color: #00bcd4;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.bottom-links a:hover {
+    text-decoration: underline;
+}
+
+/* אין נהגים */
+.no-drivers {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    color: #e57373;
+}
+.status-approved {
+    color: #00e676; /* ירוק בהיר */
+    font-weight: bold;
+}
+
+.status-denied {
+    color: #ff1744; /* אדום בולט */
+    font-weight: bold;
+}
+.statistics-button {
+    background-color: #0d2c52;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.statistics-button:hover {
+    background-color: #154a8a;
+}
+.statistics-table {
+    width: 100%;
+    border-collapse: collapse;
+    direction: rtl;
+    margin-top: 20px;
+    font-family: 'Assistant', sans-serif;
+}
+
+.statistics-table th, .statistics-table td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+}
+
+.statistics-table th {
+    background-color: #0d2c52;
+    color: white;
+    font-weight: bold;
+}
+
+.statistics-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.statistics-table tr:hover {
+    background-color: #e0f0ff;
+}
+
+.statistics-title {
+    font-size: 28px;
+    color: #0d2c52;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.statistics-subtitle {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+thead input {
+    background-color: #1d2c52; /* צבע הרקע כמו הכפתורים */
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    font-family: 'Assistant', sans-serif;
+    font-size: 14px;
+    width: 90%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+thead input::placeholder {
+    color: #bbb;
+    font-weight: normal;
+}
+
+thead input:focus {
+    outline: none;
+    border-color: #66afe9;
+    background-color: #17315c;
+}
+thead input {
+    background-color: #1d2c52;         /* צבע כהה כמו כפתורים */
+    color: white;                     /* טקסט לבן */
+    border: 1px solid #ccc;           /* מסגרת בהירה */
+    border-radius: 8px;               /* עיגול פינות */
+    padding: 8px;
+    font-family: 'Assistant', sans-serif;
+    font-size: 14px;
+    width: 90%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+thead input::placeholder {
+    color: #bbb;                      /* טקסט רמז אפור */
+    font-weight: normal;
+}
+
+thead input:focus {
+    outline: none;
+    border-color: #66afe9;            /* הדגשה בכחול כשפעיל */
+    background-color: #17315c;        /* כהה יותר כשהשדה ממוקד */
+  
+  .suggestions {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 100;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.suggestions div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions div:hover {
+  background-color: #f0f0f0;
+}

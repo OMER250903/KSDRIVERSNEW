@@ -1,0 +1,140 @@
+{
+  "barnoy": {
+    "username": "barnoy",
+    "passwordHash": "$2b$12$EgsNFPaBVznT4E5fJQgsjOKj3lHerx3Rpps5vpt3tmfakRuxuvGVi",
+    "role": "admin",
+    "fullName": "בר-נוי",
+    "permissions": [
+      "manage-users",
+      "add-driver",
+      "edit-driver",
+      "delete-driver",
+      "upload-drivers",
+      "upload-coordinations",
+      "toggle-status",
+      "flag-driver",
+      "view-statistics",
+      "add-coordination"
+    ],
+    "lastPasswordChange": "2025-06-21T19:27:37.519Z",
+    "mustChangePassword": false
+  },
+  "gabriel": {
+    "username": "gabriel",
+    "passwordHash": "$2b$12$xAqvHMydi3E4JTczy1yzDe.ioHd99xRH3SVMWxN9xhkINgV8eUX7m",
+    "fullName": "גבריאל גרבר",
+    "role": "supervisor",
+    "permissions": [
+      "add-driver",
+      "edit-driver",
+      "delete-driver",
+      "upload-coordinations",
+      "toggle-status",
+      "view-statistics",
+      "add-coordination"
+    ],
+    "lastPasswordChange": "2025-06-22T05:33:11.050Z",
+    "mustChangePassword": false
+  },
+  "yarin": {
+    "username": "yarin",
+    "passwordHash": "$2b$12$66gRrvKnpk3VlaZCk1Y4yO3Rn2xq6G4J26h2IYdefkkZ04qTyFq9O",
+    "role": "supervisor",
+    "fullName": "ירין חדד עוזר",
+    "permissions": [
+      "add-driver",
+      "edit-driver",
+      "delete-driver",
+      "toggle-status",
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-06-26T05:30:48.727Z",
+    "mustChangePassword": false
+  },
+  "calcala1": {
+    "username": "calcala1",
+    "passwordHash": "$2b$12$nHUlD0MkRModp0cT22KITuxasL0Twvs4pgPinWSB2Z4U1eFAKhdDm",
+    "role": "supervisor",
+    "permissions": [
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-06-22T05:35:14.343Z",
+    "mustChangePassword": false
+  },
+  "misrad ami": {
+    "username": "misrad ami",
+    "passwordHash": "$2b$12$7nlvJMP6JqHwEGmJBwTSa.WdVzg0vqvvuPTtYsYmtLKx9SYv.I7CC",
+    "role": "visitor",
+    "permissions": [
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-06-22T11:55:24.555Z",
+    "mustChangePassword": false
+  },
+  "sami": {
+    "username": "sami",
+    "passwordHash": "$2b$12$dUjs93W4LI6nB43AWKJUAuUGnAmxJKJHwz/XN7r5sCphQ56fa80HC",
+    "role": "admin",
+    "fullName": "שמואל וקנין",
+    "permissions": [
+      "add-driver",
+      "edit-driver",
+      "delete-driver",
+      "upload-coordinations",
+      "upload-drivers",
+      "toggle-status",
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-05-01"
+  },
+  "mashlat ramim": {
+    "username": "mashlat ramim",
+    "passwordHash": "$2b$12$EhITJiIVUT21Mgv.gx/MDuFn5nuTyUhBF6SPGbVCMgc/rKL7mDT5q",
+    "role": "visitor",
+    "permissions": [
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-06-22T08:08:35.269Z",
+    "mustChangePassword": false
+  },
+  "neta": {
+    "username": "neta",
+    "passwordHash": "$2b$12$9TQg8XyhlNUZo2T4d1A6Wu/CA75Rc917fG2xwmqbmqjAwHP7pxn02",
+    "role": "supervisor",
+    "fullName": "נטע שרון",
+    "permissions": [
+      "add-driver",
+      "edit-driver",
+      "upload-coordinations",
+      "toggle-status",
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-06-22T05:29:39.534Z",
+    "mustChangePassword": false
+  },
+  "hamal": {
+    "username": "hamal",
+    "passwordHash": "$2b$12$SErdJTKYbtR/OooHsVOHFOwNWhmTyT9vJh64WDyCad0rfFiI6Aqfu",
+    "role": "visitor",
+    "permissions": [
+      "view-statistics"
+    ],
+    "lastPasswordChange": "2025-05-01"
+  },
+  "matvey": {
+    "username": "matvey",
+    "passwordHash": "$2b$12$IaWtLS8q60djV3CuxVHPSOlkIPrkbtogH/x94pFqRl3QPCCe.RhYa",
+    "role": "supervisor",
+    "permissions": [
+      "add-driver",
+      "edit-driver",
+      "delete-driver",
+      "upload-coordinations",
+      "toggle-status",
+      "view-statistics",
+      "add-coordination"
+    ],
+    "mustChangePassword": false,
+    "lastPasswordChange": "2025-06-23T05:38:06.706Z"
+  }
+}

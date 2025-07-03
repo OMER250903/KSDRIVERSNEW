@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>GATE PASS</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html, body {
+      margin: 0;donorOrg
+      padding: 0;
+      background-color: white;
+      width: 210mm;
+      height: 297mm;
+    }
+
+    .container {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      margin: auto;
+      font-family: 'David', Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .bg-image {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 0;
+    }
+
+    .field {
+      position: absolute;
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+      z-index: 1;
+    }
+
+    /* שדות מיקומים */
+    .driver-name     { top: 219px; right: 180px; }  
+    .driver-phone    { top: 247px; right: 180px; }
+    .truck-number    { top: 275px; right: 180px; }
+    .coord-number    { top: 191px; right: 180px; }
+    .goods-type      { top: 300px; right: 180px; }
+    .entry-time      { top: 167px; right: 180px; }
+
+    @media print {
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 210mm;
+        height: 297mm;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- רקע -->
+    <img class="bg-image" src="https://cdn.glitch.global/64a24585-7ccf-4cfb-bfc3-67e1b6c37fe4/gatepass.jpg?v=1746367795632" alt="Gate Pass">
+
+    <!-- שדות -->
+    <div class="field driver-name"><%= driver.name %></div>
+    <div class="field driver-phone"><%= driver.phone %></div>
+    <div class="field truck-number">
+      <%= coordination ? coordination.truckNumber : (driver.truckNumber || '') %>
+    </div>
+    <div class="field coord-number">
+      <%= coordination ? coordination.coordinationNumber : (driver.coordinationNumber || '') %>
+    </div>
+    <div class="field goods-type">
+      <%= coordination ? coordination.goodsType : (driver.goodsType || '') %>
+    </div>
+    <div class="field entry-time">
+      <%= coordination && coordination.passedAt ? coordination.passedAt : '' %>
+    </div>
+
+    <% 
+var specialOrgs = ['RAHMA', 'IHRC', 'MULTIFAITH', 'MULTIFAITH ALLIANCE', 'RAHMA WORLDWIDE', 'GHF'];
+      var orgUpper = '';
+      if (coordination && coordination.donorOrg) {
+        orgUpper = coordination.donorOrg.toUpperCase();
+        if (specialOrgs.indexOf(orgUpper) !== -1) {
+    %>
+<div class="field" style="top: 25px; right: 445px; font-size: 18px; color: black; background-color: yellow; padding: 4px 8px; border-radius: 4px; white-space: nowrap; max-width: 100%; overflow: hidden;">
+        לפריקה ביוטא/מרכזי חלוקה/<%= coordination.donorOrg %>
+      </div>
+  
+    <% 
+        }
+      }
+    %>
+    <% if (coordination && (coordination.route === 'תרקומיא' || coordination.route === 'שער אפרים')) { %>
+  <div class="field" style="top: 60px; right: 445px; font-size: 18px; color: black; background-color: yellow; padding: 4px 8px; border-radius: 4px; white-space: nowrap;">
+    <%= coordination.route %>
+  </div>
+<% } %>
+
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      window.print();
+    });
+  </script>
+</body>
+</html>

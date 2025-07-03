@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>רשימת נהגים</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #1a1a1a;
+    }
+
+   header.main-header {
+  background-color: #004080;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.main-header .page-title {
+  font-size: 35px;
+  color: white;
+  margin: 0 auto;
+  font weight: bold;
+}
+
+.main-header .logo {
+  height: 80px;
+  position: absolute;
+  right: 20px;
+}
+
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .search-form {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .search-container input[type="text"] {
+      padding: 12px 20px;
+      font-size: 16px;
+      width: 60%;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+      outline: none;
+    }
+
+    .search-container button {
+      background: #004080;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .actions button {
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 15px;
+  font-family: 'Segoe UI', sans-serif; 
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .actions button:hover {
+      background: #002f5e;
+    }
+
+    .statistics-button {
+      background: #004080;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .statistics-button:hover {
+      background-color: #002f5e;
+    }
+
+    .drivers-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: #fefefe;
+      border: 2px solid #000;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .drivers-table thead {
+      background-color: #004080;
+      color: white;
+    }
+
+    .drivers-table th,
+    .drivers-table td {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #000;
+    }
+
+    .drivers-table th:first-child,
+    .drivers-table td:first-child {
+      border-right: 1px solid #000;
+    }
+
+    .drivers-table tbody tr:hover {
+      background-color: #e3f2fd;
+      cursor: pointer;
+    }
+
+    .driver-img-cell img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .status-approved {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-denied {
+      color: red;
+      font-weight: bold;
+    }
+
+    .bottom-links {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .bottom-links a {
+      text-decoration: none;
+      color: #004080;
+      font-weight: 500;
+      margin: 0 10px;
+    }
+
+    .bottom-links a:hover {
+      text-decoration: underline;
+    }
+    .actions button,
+.statistics-button {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.actions button:hover,
+.statistics-button:hover {
+  background-color: #003060;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll("tr[data-href]").forEach(row => {
+        row.addEventListener("click", () => {
+          window.location.href = row.dataset.href;
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+ <header class="main-header">
+  <h1 class="page-title">מערכת ניהול נהגים ותיאומים - מת"ק עזה</h1>
+       <img src="https://cdn.glitch.global/64a24585-7ccf-4cfb-bfc3-67e1b6c37fe4/logo.png?v=1745867431324" alt="לוגו" class="logo">
+</header>
+
+<div class="container">
+<div class="search-form">
+  <form id="searchForm">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 חפש לפי שם נהג תעודת זהות או מספר משאית...">
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </div>
+  </form>
+</div>
+
+
+<div class="actions">
+  <form action="/upload-drivers" method="GET">
+    <button type="submit"><i class="fas fa-users"></i> הזנת נהגים מרובה</button>
+  </form>
+  <form action="/upload-coordinations" method="GET">
+    <button type="submit"><i class="fas fa-file-upload"></i> הוסף רשימת תיאום</button>
+  </form>
+  <form action="/manage-users" method="GET">
+    <button type="submit"><i class="fas fa-user-cog"></i> ניהול משתמשים והרשאות</button>
+  </form>
+</div>
+
+<div style="text-align: left; margin-bottom: 20px;">
+  <a href="/statistics" class="statistics-button"><i class="fas fa-chart-bar"></i> לצפייה בסטטיסטיקות</a>
+</div>
+
+<% if (drivers.length > 0) { %>
+<%
+  let totalCoordinations = 0;
+  drivers.forEach(([id, driver]) => {
+    if (Array.isArray(driver.coordinations)) {
+      totalCoordinations += driver.coordinations.length;
+    }
+  });
+%>
+<div style="text-align: right; font-size: 18px; font-weight: bold; color: #004080; margin-bottom: 10px;">
+  🧾 סה"כ תיאומים היום: <%= totalCoordinations %>
+</div>
+
+
+  <table class="drivers-table">
+    <thead>
+      <tr>
+        <th>תמונה</th>
+        <th>שם הנהג</th>
+        <th>תעודת זהות</th>
+        <th>סטטוס</th>
+        <th>תיאום</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% drivers.forEach(([id, driver]) => { %>
+<% const allPassed = driver.coordinations && driver.coordinations.length > 0 && driver.coordinations.every(c => c.passed); %>
+<tr 
+  data-href="/driver/<%= id %>" 
+  data-truck="<%= (driver.coordinations && driver.coordinations[0] && driver.coordinations[0].truckNumber) || '' %>"
+style="<%= allPassed ? 'background-color: #a3f7b5;' : '' %>"
+>
+
+          <td class="driver-img-cell">
+            <img src="<%= driver.image %>" alt="תמונה">
+          </td>
+          <td>
+            <%= driver.name %>
+            <% if (driver.flagged) { %>
+              <span title="סומן למעקב" style="color: #ff9800; margin-right: 6px;">🚩</span>
+            <% } %>
+          </td>
+          <td><%= driver.idNumber %></td>
+          <td>
+            <% if (driver.status === 'מאושר') { %>
+              <span class="status-approved"><%= driver.status %></span>
+            <% } else if (driver.status === 'מנוע') { %>
+              <span class="status-denied"><%= driver.status %></span>
+            <% } else { %>
+              <%= driver.status %>
+            <% } %>
+          </td>
+          <td>
+            <% if (!driver.coordinations || driver.coordinations.length === 0) { %>
+              <span class="status-denied">—</span>
+            <% } else if (driver.coordinations.length === 1) { %>
+              <span class="status-approved"><%= driver.coordinations[0].coordinationNumber %></span>
+            <% } else { %>
+              <span class="status-approved">
+                <%= driver.coordinations.map(c => c.coordinationNumber).join(' | ') %>
+              </span>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+                
+
+<% } else { %>
+  <p style="text-align:center; font-size: 18px;">לא נמצאו נהגים.</p>
+<% } %>
+
+<div class="bottom-links">
+  <a href="/add-driver">➕ הוסף נהג חדש</a> |
+  <a href="/logout">🚪 יציאה</a>
+</div>
+<script>
+  document.getElementById('searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const filter = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('.drivers-table tbody tr');
+
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      const truck = row.dataset.truck || '';
+      row.style.display = (text.includes(filter) || truck.includes(filter)) ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>

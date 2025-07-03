@@ -1,0 +1,23 @@
+[
+  {
+    "name": "ROBERT DE NIKO",
+    "idNumber": "325339885",
+    "phone": "050-1234567",
+    "coordinationNumber": "999",
+    "goodsType": "קמח",
+    "donorOrg": "GHF",
+    "palletCount": "20",
+    "passedAt": "13:05",
+    "route": "תרקומיא",
+    "gatePassPrinted": false
+  },
+  {
+    "driverId": "1749294380536",
+    "name": "מנוע",
+    "idNumber": "23549058",
+    "coordinationNumber": "1",
+    "passedAt": "14:06",
+    "passedBy": "בר-נוי",
+    "gatePassPrinted": true
+  }
+]

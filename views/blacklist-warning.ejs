@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>אזהרה – נהגים מנועים</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff3e0;
+      color: #333;
+      padding: 40px;
+      direction: rtl;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      color: #d32f2f;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #ef5350;
+      color: white;
+    }
+    .buttons {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #004080;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>⚠️ נמצאו <%= flagged.length %> נהגים שמופיעים ברשימת המנועים</h2>
+    <p>אם תמשיך, הנהגים הללו יתווספו למרות הסיכון.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>שם נהג</th>
+          <th>תעודת זהות</th>
+          <th>טלפון</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% flagged.forEach(d => { %>
+          <tr>
+            <td><%= d['שם נהג'] %></td>
+            <td><%= d['תעודת זהות'] %></td>
+            <td><%= d['טלפון נהג'] || '—' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="buttons">
+<form action="/force-upload-coordinations" method="post" style="display:inline;">
+  <input type="hidden" name="filePath" value="<%= filePath %>">
+  <button type="submit" class="btn">✅ המשך בכל זאת</button>
+</form>
+      <a href="/upload-coordinations" class="btn" style="background:#aaa;">🔙 חזור</a>
+    </div>
+  </div>
+</body>
+</html>

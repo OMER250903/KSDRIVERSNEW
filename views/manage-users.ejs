@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ניהול משתמשים</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      font-family: 'Assistant', sans-serif;
+      background-color: #f3f6fa;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #003f8a;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #004080;
+      color: white;
+      padding: 14px;
+    }
+
+    td {
+      background-color: #fff;
+      color: #000;
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+    }
+
+    table tr:hover td {
+      background-color: #f0f8ff;
+    }
+
+    button {
+      padding: 8px 14px;
+      font-weight: bold;
+      font-family: 'Assistant', sans-serif;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button[type="submit"] {
+      background-color: #c62828;
+      color: white;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #e53935;
+    }
+
+    .password-button {
+      background-color: #004080;
+      color: white;
+    }
+
+    .password-button:hover {
+      background-color: #0059b3;
+    }
+
+    a {
+      color: #003f8a;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ניהול משתמשים</h1>
+
+    <script>
+      function confirmDelete(username) {
+        return confirm('האם למחוק את ' + username + '?');
+      }
+    </script>
+
+    <% 
+      function can(permissions, action) {
+        if (!Array.isArray(permissions)) return false;
+        return permissions.includes(action);
+      }
+    %>
+
+    <table>
+      <tr>
+        <th>שם משתמש</th>
+        <th>תפקיד</th>
+        <% if (can(permissions, 'manage-users')) { %>
+          <th>מחיקה</th>
+          <th>שינוי סיסמה</th>
+        <% } %>
+      </tr>
+
+      <% for (const username in users) { %>
+        <tr>
+          <td><%= username %></td>
+          <td><%= users[username].role %></td>
+
+          <% if (can(permissions, 'manage-users')) { %>
+            <td>
+              <% if (username !== 'barnoy') { %>
+                <form action="/delete-user" method="POST" onsubmit="return confirmDelete('<%= username %>');">
+                  <input type="hidden" name="username" value="<%= username %>">
+                  <button type="submit">מחק</button>
+                </form>
+              <% } else { %>
+                ---
+              <% } %>
+            </td>
+            <td>
+              <% if (username !== 'barnoy') { %>
+                <form action="/edit-password/<%= username %>" method="GET">
+                  <button type="submit" class="password-button">🔒 שנה סיסמה</button>
+                </form>
+              <% } else { %>
+                ---
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+      <% } %>
+    </table>
+
+    <% if (can(permissions, 'manage-users')) { %>
+      <a href="/add-user">➕ הוסף משתמש חדש</a>
+    <% } %>
+
+    <br><br>
+    <a href="/">⬅ חזרה לדף הראשי</a>
+  </div>
+</body>
+</html>

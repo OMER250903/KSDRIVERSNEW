@@ -1,0 +1,17 @@
+[
+  {
+    "driverId": "1749893876432",
+    "name": "1",
+    "idNumber": "1",
+    "coordinationNumber": "11",
+    "goodsType": "1",
+    "truckNumber": "1",
+    "donorOrg": "1",
+    "palletCount": "1",
+    "route": "1",
+    "passed": true,
+    "passedAt": "12:38",
+    "passedBy": "בר-נוי",
+    "gatePassPrinted": true
+  }
+]

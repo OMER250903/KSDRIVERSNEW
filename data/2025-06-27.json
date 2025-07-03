@@ -1,0 +1,17 @@
+[
+  {
+    "driverId": "1751017574452",
+    "name": "בדיקה 1",
+    "idNumber": "325339885",
+    "coordinationNumber": "1",
+    "goodsType": "מים",
+    "truckNumber": "63-431-31",
+    "donorOrg": "UNICEF",
+    "palletCount": "11",
+    "route": "ישראל",
+    "passed": true,
+    "passedAt": "12:46",
+    "passedBy": "בר-נוי",
+    "gatePassPrinted": true
+  }
+]

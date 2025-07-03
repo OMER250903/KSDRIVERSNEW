@@ -1,0 +1,122 @@
+[
+  {
+    "name": "סמי אבו לבדה",
+    "idNumber": "24790651",
+    "phone": "050-5215352",
+    "coordinationNumber": "9",
+    "goodsType": "קמח, ירקות, שימורים",
+    "donorOrg": "MWK",
+    "palletCount": "6",
+    "passedAt": "13:17",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "דורון יחיא",
+    "idNumber": "24803942",
+    "phone": "587265502",
+    "coordinationNumber": "5",
+    "goodsType": "סלי מזון ",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "07:28",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "שרון באני",
+    "idNumber": "25454323",
+    "phone": "542330023",
+    "coordinationNumber": "1",
+    "goodsType": "סלי מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "11:15",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "דן אהרונוביץ",
+    "idNumber": "28091494",
+    "phone": "525374201",
+    "coordinationNumber": "3",
+    "goodsType": "סלי מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "13:56",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "כרים זג'יר",
+    "idNumber": "43130038",
+    "phone": "528893129",
+    "coordinationNumber": "8",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "10:33",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "יוסי סעדון",
+    "idNumber": "56673239",
+    "phone": "537705300",
+    "coordinationNumber": "4",
+    "goodsType": "סלי מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "14:17",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "יוסף חאג' יחיא",
+    "idNumber": "58995127",
+    "phone": "050-2922220",
+    "coordinationNumber": "10",
+    "goodsType": "מים",
+    "donorOrg": "MWK",
+    "palletCount": "8",
+    "passedAt": "14:04",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "שאהר סנקרט",
+    "idNumber": "80885817",
+    "phone": "526759625",
+    "coordinationNumber": "6",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "13:38",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "חסאם גאבר",
+    "idNumber": "80959604",
+    "phone": "525486685",
+    "coordinationNumber": "7",
+    "goodsType": "מזון",
+    "donorOrg": "IHRC",
+    "palletCount": "18",
+    "passedAt": "07:13",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  },
+  {
+    "name": "אשר מיארה",
+    "idNumber": "308116383",
+    "phone": "5282800300",
+    "coordinationNumber": "2",
+    "goodsType": "מזון",
+    "donorOrg": "GHF",
+    "palletCount": "22",
+    "passedAt": "12:26",
+    "route": "ישראל",
+    "gatePassPrinted": true
+  }
+]

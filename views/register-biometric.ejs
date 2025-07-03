@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>רישום זיהוי ביומטרי</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      background: #e6f0ff;
+      font-family: 'Assistant', sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .box {
+      background: white;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>📲 רישום זיהוי ביומטרי</h1>
+    <p>המערכת תבקש להשתמש בטביעת אצבע או Face ID.</p>
+    <button onclick="registerBiometric()">התחל</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    async function registerBiometric() {
+      const status = document.getElementById("status");
+      status.innerText = "⏳ מבצע רישום...";
+
+      try {
+        // בקשת challenge מהשרת
+        const res = await fetch('/webauthn/register-options');
+        const options = await res.json();
+
+        // המרה לפורמט מתאים
+        options.challenge = Uint8Array.from(atob(options.challenge), c => c.charCodeAt(0));
+        options.user.id = Uint8Array.from(atob(options.user.id), c => c.charCodeAt(0));
+
+        const credential = await navigator.credentials.create({ publicKey: options });
+
+        const credentialData = {
+          id: credential.id,
+          rawId: btoa(String.fromCharCode(...new Uint8Array(credential.rawId))),
+          type: credential.type,
+          response: {
+            attestationObject: btoa(String.fromCharCode(...new Uint8Array(credential.response.attestationObject))),
+            clientDataJSON: btoa(String.fromCharCode(...new Uint8Array(credential.response.clientDataJSON))),
+          }
+        };
+
+        // שליחת הנתונים לשרת
+        const verifyRes = await fetch('/webauthn/register-verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(credentialData)
+        });
+
+        const result = await verifyRes.json();
+
+        if (result.success) {
+          status.innerText = "✅ זיהוי ביומטרי הופעל בהצלחה!";

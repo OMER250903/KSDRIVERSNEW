@@ -322,7 +322,7 @@ if (!can(req.session.permissions, 'add-driver')) {
 });
 
 app.post('/add-driver', (req, res) => {
-  const drivers = Object.values(readJSON('data/drivers.json'));
+  const drivers = Object.values(readJSON('drivers.json'));
 
   const {
     name,
@@ -374,7 +374,7 @@ app.post('/add-driver', (req, res) => {
 
   const newDriverId = Date.now().toString();
   driverData[newDriverId] = newDriver;
-  writeJSON('data/drivers.json', driverData);
+  writeJSON('drivers.json', driverData);
 
 res.redirect('/login?biometricSetup=true&username=' + encodeURIComponent(user.username));
 });
@@ -1372,7 +1372,7 @@ app.post('/force-upload-coordinations', ensureLoggedIn, (req, res) => {
 });
 app.post('/reject-driver', ensureLoggedIn, (req, res) => {
   const { driverId, coordinationNumber, reason } = req.body;
-  const drivers = readJSON('./data/drivers.json');
+  const drivers = readJSON('./drivers.json');
 
   const driver = drivers[driverId];
   if (!driver || !Array.isArray(driver.coordinations)) {
@@ -1393,7 +1393,7 @@ app.post('/reject-driver', ensureLoggedIn, (req, res) => {
   coord.rejectionReason = reason;
   coord.rejectedAt = new Date().toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem' });
 
-  writeJSON('./data/drivers.json', drivers);
+  writeJSON('./drivers.json', drivers);
   res.redirect(`/driver/${driverId}`);
 });
 
@@ -1402,7 +1402,7 @@ app.post('/reject-driver', ensureLoggedIn, (req, res) => {
 
 app.get('/reject-driver-form', ensureLoggedIn, (req, res) => {
   const { coordinationNumber } = req.query;
-  const drivers = readJSON('./data/drivers.json');
+  const drivers = readJSON('./drivers.json');
 
   let found = null;
 
@@ -1429,7 +1429,7 @@ app.get('/reject-driver-form', ensureLoggedIn, (req, res) => {
 });
 app.get('/driver/:driverId', (req, res) => {
   const driverId = req.params.driverId;
-  const drivers = readJSON('./data/drivers.json');
+  const drivers = readJSON('./drivers.json');
   const driver = drivers[driverId];
 
   if (!driver) {

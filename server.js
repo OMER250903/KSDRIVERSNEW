@@ -22,7 +22,8 @@ app.use(express.json()); // ← ואז משתמשים
 }
 
 function writeJSON(filepath, data) {
-  const fullPath = filepath if filepath.startsWith('/data/') else '/data/' + filepath;
+  const fullPath = filepath.startsWith('/data/') ? filepath : '/data/' + filepath;
+
   fs.writeFileSync(fullPath, JSON.stringify(data, null, 2), 'utf-8');
 }
 

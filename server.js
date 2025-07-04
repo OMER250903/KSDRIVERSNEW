@@ -1144,7 +1144,7 @@ app.post('/update-coordination-status/:id/:index', ensureLoggedIn, (req, res) =>
 
 
 app.get('/export-csv', (req, res) => {
-  const driversPath = path.join(__dirname, 'data', 'drivers.json');
+  const driversPath = '/data/drivers.json';
 
   if (!fs.existsSync(driversPath)) {
     return res.status(404).send('קובץ drivers.json לא קיים.');
@@ -1802,7 +1802,7 @@ function saveDailyStatistics() {
   const fs = require('fs');
   const path = require('path');
 
-  const driversPath = path.join(__dirname, 'data', 'drivers.json');
+  const driversPath = '/data/drivers.json';
   const statsDir = '/data/statistics_logs';
 
   if (!fs.existsSync(driversPath)) return;
@@ -1866,7 +1866,7 @@ app.get('/cron/reset', (req, res) => {
   }
 
   console.log("🧹 CRON: איפוס drivers.json");
-  const driversPath = path.join(__dirname, 'data', 'drivers.json');
+  const driversPath = '/data/drivers.json';
   fs.writeFileSync(driversPath, '{}', 'utf-8');
   res.send('✅ מאגר הנהגים אופס');
 });

@@ -8,8 +8,8 @@ const multer = require('multer');
 const { parse } = require('json2csv'); // ודא שזה למעלה בקובץ
 const https = require('https');
 const bcrypt = require('bcrypt');
-const usersPath = '/data/users.json';
-const loginAttemptsPath = '/data/login_attempts.json';
+const usersPath = path.join(__dirname, 'data', 'users.json');
+const loginAttemptsPath = path.join(__dirname, 'data', 'login_attempts.json');
 function readJSON(filepath) {
 const moment = require('moment-timezone');
 const israelTime = moment.tz(new Date(), 'Asia/Jerusalem').format('HH:mm');
@@ -208,7 +208,7 @@ function isValidIsraeliID(id) {
 }
 
 // טעינת נהגים
-const filePath = '/data/drivers.json';
+const filePath = path.join(__dirname, 'data', 'drivers.json');
 let driverData = {};
 
 if (fs.existsSync(filePath)) {
@@ -640,7 +640,7 @@ app.post('/upload-coordinations', ensureLoggedIn, upload.single('coordinationsFi
       return res.status(400).send('⚠️ הקובץ ריק או לא תקין');
     }
 
-    const blacklistPath = '/data/blacklist.json';
+    const blacklistPath = path.join(__dirname, 'data', 'blacklist.json');
     const blacklist = fs.existsSync(blacklistPath)
       ? JSON.parse(fs.readFileSync(blacklistPath, 'utf-8'))
       : [];
@@ -777,7 +777,7 @@ app.post('/update-yuval', (req, res) => {
   console.log('🔑 key:', key);
   console.log('✅ value:', value);
 
-  const yuvalPath = '/data/yuval.json';
+  const yuvalPath = path.join(__dirname, 'data', 'yuval.json');
   let yuvalData = {};
 
   if (fs.existsSync(yuvalPath)) {
@@ -845,7 +845,7 @@ const usernameToDelete = req.body.username ? req.body.username.trim().toLowerCas
 });
 
 // קובץ JSON שישמור את הנתונים עבור "הוזן ביובל"
-const yuvalPath = '/data/yuval.json';
+const yuvalPath = path.join(__dirname, 'data', 'yuval.json');
 let yuvalData = {};
 
 // טעינת הקובץ הקיים אם קיים, או יצירת חדש
@@ -1144,7 +1144,7 @@ app.post('/update-coordination-status/:id/:index', ensureLoggedIn, (req, res) =>
 
 
 app.get('/export-csv', (req, res) => {
-  const driversPath = '/data/drivers.json';
+  const driversPath = path.join(__dirname, 'data', 'drivers.json');
 
   if (!fs.existsSync(driversPath)) {
     return res.status(404).send('קובץ drivers.json לא קיים.');
@@ -1468,7 +1468,7 @@ app.get('/cron/save-statistics', (req, res) => {
     fs.mkdirSync(statisticsDir, { recursive: true });
   }
  // ✅ טען את yuval.json
-  const yuvalPath = '/data/yuval.json';
+  const yuvalPath = path.join(__dirname, 'data', 'yuval.json');
   const yuvalData = fs.existsSync(yuvalPath)
     ? JSON.parse(fs.readFileSync(yuvalPath, 'utf-8'))
     : {};
@@ -1515,7 +1515,7 @@ app.get('/statistics/:date', ensureLoggedIn, (req, res) => {
 
   const selectedDate = req.params.date;
   const filePath = path.join(__dirname, 'data', 'statistics_logs', `${selectedDate}.json`);
-  const yuvalPath = '/data/yuval.json';
+  const yuvalPath = path.join(__dirname, 'data', 'yuval.json');
 
   const allStats = fs.existsSync(filePath)
     ? JSON.parse(fs.readFileSync(filePath, 'utf-8'))
@@ -1573,7 +1573,7 @@ app.get('/statistics', ensureLoggedIn, (req, res) => {
 
   const selectedDate = req.query.date;
   const filter = (req.query.q || '').toLowerCase().trim();
-  const yuvalPath = '/data/yuval.json';
+  const yuvalPath = path.join(__dirname, 'data', 'yuval.json');
 
   let yuvalData = {};
   if (fs.existsSync(yuvalPath)) {
@@ -1616,7 +1616,7 @@ app.get('/statistics', ensureLoggedIn, (req, res) => {
     }
   } else {
     // === סטטיסטיקה חיה מהמערכת ===
-    const statsPath = '/data/drivers.json';
+    const statsPath = path.join(__dirname, 'data', 'drivers.json');
     let driverData = {};
     try {
       const fileContent = fs.readFileSync(statsPath, 'utf-8').trim();
@@ -1692,7 +1692,7 @@ const statisticsLogsDir = '/data/statistics_logs';
 
 app.get('/search-statistics', ensureLoggedIn, (req, res) => {
   const query = (req.query.query || '').toLowerCase().trim();
-  const statsDir = '/data/statistics_logs';
+  const statsDir = path.join(__dirname, 'data', 'statistics_logs';
 
   if (!query) return res.json([]);
 
@@ -1700,7 +1700,7 @@ app.get('/search-statistics', ensureLoggedIn, (req, res) => {
 
   if (!fs.existsSync(statsDir)) return res.json([]);
 
-  const files = fs.readdirSync(statsDir).filter(f => f.endsWith('.json'));
+  const files = fs.readdirSync(statsDir).filter(f => f.endsWith('.json')));
 
   for (const file of files) {
     const fullPath = path.join(statsDir, file);
@@ -1720,7 +1720,7 @@ app.get('/search-statistics', ensureLoggedIn, (req, res) => {
 
   res.json(matchedResults);
 });
-const USERS_PATH = '/data/users.json';
+const USERS_PATH = path.join(__dirname, 'data', 'users.json');
 
 app.get('/cron/require-password-change', (req, res) => {
   const secret = req.query.key;
@@ -1800,7 +1800,7 @@ function saveDailyStatistics() {
   const fs = require('fs');
   const path = require('path');
 
-  const driversPath = '/data/drivers.json';
+  const driversPath = path.join(__dirname, 'data', 'drivers.json');
   const statsDir = '/data/statistics_logs';
 
   if (!fs.existsSync(driversPath)) return;
@@ -1864,7 +1864,7 @@ app.get('/cron/reset', (req, res) => {
   }
 
   console.log("🧹 CRON: איפוס drivers.json");
-  const driversPath = '/data/drivers.json';
+  const driversPath = path.join(__dirname, 'data', 'drivers.json');
   fs.writeFileSync(driversPath, '{}', 'utf-8');
   res.send('✅ מאגר הנהגים אופס');
 });

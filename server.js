@@ -1692,7 +1692,8 @@ const statisticsLogsDir = '/data/statistics_logs';
 
 app.get('/search-statistics', ensureLoggedIn, (req, res) => {
   const query = (req.query.query || '').toLowerCase().trim();
-  const statsDir = path.join(__dirname, 'data', 'statistics_logs';
+  const statsDir = path.join(__dirname, 'data', 'statistics_logs');
+
 
   if (!query) return res.json([]);
 
@@ -1700,7 +1701,8 @@ app.get('/search-statistics', ensureLoggedIn, (req, res) => {
 
   if (!fs.existsSync(statsDir)) return res.json([]);
 
-  const files = fs.readdirSync(statsDir).filter(f => f.endsWith('.json')));
+  const files = fs.readdirSync(statsDir).filter(f => f.endsWith('.json'));
+
 
   for (const file of files) {
     const fullPath = path.join(statsDir, file);
@@ -1908,7 +1910,6 @@ app.post('/login-biometric', (req, res) => {
 app.get('/', (req, res) => {
   res.status(200).send('🟢 Server is running');
 });
-
 
 // הרצת השרת
 const PORT = process.env.PORT || 3000;

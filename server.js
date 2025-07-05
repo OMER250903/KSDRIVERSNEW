@@ -29,7 +29,6 @@ function writeJSON(filepath, data) {
 let loginAttempts = {};
 const permissions = {
 
-
   admin: ['add-driver', 'edit-driver', 'delete-driver', 'upload-coordinations', 'upload-drivers', 'toggle-status', 'manage-users', 'view-statistics'],
   bakara: ['add-driver', 'edit-driver', 'toggle-status'],
   supervisor: ['add-driver', 'edit-driver'],
@@ -100,7 +99,6 @@ app.use((req, res, next) => {
 function hasPermission(role, allowedRoles) {
     return allowedRoles.includes(role);
 }
-
 
 // Multer - להעלאת תמונות וקבצים
 const storage = multer.diskStorage({
@@ -180,8 +178,6 @@ app.get('/cron/save-and-reset', async (req, res) => {
   res.send(`✅ שמירה: ${saveResult}<br>🔁 איפוס: ${resetResult}`);
 });
 
-
-
 // פונקציות עזר
 function ensureLoggedIn(req, res, next) {
     if (req.session && req.session.username) {
@@ -190,8 +186,6 @@ function ensureLoggedIn(req, res, next) {
         res.redirect('/login?timeout=true');
     }
 }
-
-
 
 function isValidIsraeliID(id) {
     id = String(id).trim();
@@ -230,7 +224,6 @@ function saveDrivers() {
     fs.writeFileSync(filePath, JSON.stringify(driverData, null, 2), 'utf-8');
     console.log('נתונים נשמרו ב־drivers.json');
 }
-
 
 const statsFile = path.join(__dirname, 'logs', 'passed-drivers.json');
 
@@ -282,11 +275,6 @@ phone: driver.phone || driver.phoneNumber || '',
   console.log(`✅ נשמרו סטטיסטיקות ל־${driver.name}`);
   res.sendStatus(200);
 });
-
-
-
-
-
 
 // ----------------- נתיבים -----------------
 
@@ -369,8 +357,6 @@ app.post('/add-driver', (req, res) => {
 res.redirect('/login?biometricSetup=true&username=' + encodeURIComponent(user.username));
 });
 
-
-
 // דף פרטי נהג
 app.get('/driver/:id', ensureLoggedIn, (req, res) => {
     const driverId = req.params.id;
@@ -419,7 +405,6 @@ app.post('/edit-driver/:id', ensureLoggedIn, (req, res) => {
   if (!driverData[driverId]) {
     return res.status(404).send('Driver not found');
   }
-
 
   if (!isValidIsraeliID(idNumber)) {
     return res.render('edit-driver', {
@@ -487,8 +472,6 @@ const routes = toArray(req.body.route); // ✅ נוספה תמיכה בנתיב
   res.redirect(`/driver/${driverId}`);
 });
 
-
-
 app.post('/transfer-coordination/:driverId/:coordIndex', ensureLoggedIn, (req, res) => {
   try {
     const sourceDriverId = req.params.driverId;
@@ -548,8 +531,6 @@ app.post('/transfer-coordination/:driverId/:coordIndex', ensureLoggedIn, (req, r
   }
 });
 
-
-
 // מחיקת נהג
 app.post('/delete-driver/:id', ensureLoggedIn, (req, res) => {
 if (!can(req.session.permissions, 'delete-driver')) {
@@ -578,8 +559,6 @@ app.post('/upload-image/:id', ensureLoggedIn, upload.single('driverImage'), (req
   res.redirect(`/driver/${driverId}`);
 });
 
-
-
 // שמירת צ'קבוקס "עבר בקרה"
 app.post('/save-checkbox/:id', ensureLoggedIn, (req, res) => {
     const driverId = req.params.id;
@@ -589,7 +568,6 @@ app.post('/save-checkbox/:id', ensureLoggedIn, (req, res) => {
 if (!can(req.session.permissions, 'toggle-status')) {
     return res.status(403).send('אין הרשאה לסמן מעבר בקרה');
 }
-
 
     driverData[driverId].driverStatus = driverStatus;
     driverData[driverId].passedAt = driverStatus
@@ -643,7 +621,6 @@ app.post('/upload-coordinations', ensureLoggedIn, upload.single('coordinationsFi
      const isBlacklisted = blacklist.some(item =>
   idSimilarity(item.idNumber, idNumber) >= 0.9
 );
-
 
       const coordination = {
         coordinationNumber: record['מספר תיאום'] || '',
@@ -780,7 +757,6 @@ if (!can(req.session.permissions, 'manage-users')) {
     return res.status(403).send('אין הרשאה לניהול משתמשים');
 }
 
-
     const users = fs.existsSync(usersPath)
         ? JSON.parse(fs.readFileSync(usersPath, 'utf8'))
         : {};
@@ -838,12 +814,10 @@ function saveYuvalData() {
   fs.writeFileSync(yuvalPath, JSON.stringify(yuvalData, null, 2), 'utf-8');
 }
 
-
 app.post('/add-user', async (req, res) => {
     if (!can(req.session.permissions, 'manage-users')) {
         return res.status(403).send('אין הרשאה להוסיף משתמשים');
     }
-
 
 const { username, password, confirmPassword, role } = req.body;
 const permissionsArray = Array.isArray(req.body.permissions)
@@ -869,7 +843,6 @@ app.get(`/cron/check-flagged-drivers/${SECRET_TOKEN}`, (req, res) => {
     res.send('כל הנהגים עברו בקרה.');
   }
 });
-
 
   const cleanUsername = username.trim().toLowerCase();
 
@@ -898,7 +871,6 @@ users[cleanUsername] = {
   permissions: permissionsArray
 };
 
-
     fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
     console.log(`👤 משתמש חדש נוסף: ${cleanUsername} (${role})`);
 
@@ -915,7 +887,6 @@ app.get('/add-user', ensureLoggedIn, (req, res) => {
     userPermissions: req.session.permissions // ✅ זה מה שחסר
   });
 });
-
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -988,8 +959,6 @@ if (user.mustChangePassword || diffDays >= 14) {
   req.session.tempUser = username;
   return res.render('login', { timeout: false, mustChange: true });
 }
-
-
 
         res.redirect('/');
     } catch (err) {
@@ -1109,11 +1078,9 @@ app.post('/update-coordination-status/:id/:index', ensureLoggedIn, (req, res) =>
   coord.checkedBy = null;
 }
 
-
   saveDrivers();
   res.redirect(`/driver/${driverId}`);
 });
-
 
 app.get('/export-csv', (req, res) => {
   const driversPath = '/data/drivers.json';
@@ -1173,7 +1140,6 @@ phone: driver.phone || driver.phoneNumber || '',
     res.status(500).send('שגיאה בהמרת הנתונים ל־CSV');
   }
 });
-
 
 app.post('/update-yuval/:key', ensureLoggedIn, (req, res) => {
   const key = req.params.key; // לדוגמה: תעודת זהות + אינדקס
@@ -1275,7 +1241,6 @@ app.post('/driver/:id/add-coordination', ensureLoggedIn, (req, res) => {
   res.redirect(`/driver/${driverId}`);
 });
 
-
 app.get('/driver/:id/add-coordination', ensureLoggedIn, (req, res) => {
   const driverId = req.params.id;
   const driver = driverData[driverId];
@@ -1288,8 +1253,6 @@ app.get('/driver/:id/add-coordination', ensureLoggedIn, (req, res) => {
     errorMessage: null
   });
 });
-
-
 
 // הסרת תיאום לפי אינדקס
 app.post('/driver/:id/delete-coordination/:index', ensureLoggedIn, (req, res) => {
@@ -1304,7 +1267,6 @@ app.post('/driver/:id/delete-coordination/:index', ensureLoggedIn, (req, res) =>
   saveDrivers();
   res.redirect(`/driver/${driverId}`);
 });
-
 
 app.get('/drivers-list', ensureLoggedIn, (req, res) => {
   const list = Object.values(driverData).map(driver => ({
@@ -1370,9 +1332,6 @@ app.post('/reject-driver', ensureLoggedIn, (req, res) => {
   writeJSON('./drivers.json', drivers);
   res.redirect(`/driver/${driverId}`);
 });
-
-
-
 
 app.get('/reject-driver-form', ensureLoggedIn, (req, res) => {
   const { coordinationNumber } = req.query;
@@ -1499,7 +1458,6 @@ let passedDrivers = allStats.map(driver => ({
   ...driver,
   phone: driver.phone || driver.phoneNumber || '—'
 }));
-
 
 if (filter) {
   passedDrivers = passedDrivers.filter(d =>
@@ -1657,15 +1615,11 @@ app.get('/statistics', ensureLoggedIn, (req, res) => {
   });
 });
 
-
-
-
 const statisticsLogsDir = '/data/statistics_logs';
 
 app.get('/search-statistics', ensureLoggedIn, (req, res) => {
   const query = (req.query.query || '').toLowerCase().trim();
   const statsDir = path.join(__dirname, 'data', 'statistics_logs');
-
 
   if (!query) return res.json([]);
 
@@ -1674,7 +1628,6 @@ app.get('/search-statistics', ensureLoggedIn, (req, res) => {
   if (!fs.existsSync(statsDir)) return res.json([]);
 
   const files = fs.readdirSync(statsDir).filter(f => f.endsWith('.json'));
-
 
   for (const file of files) {
     const fullPath = path.join(statsDir, file);
@@ -1825,7 +1778,6 @@ app.get('/cron/save', (req, res) => {
   res.send('✅ נשמרו סטטיסטיקות מהדרייברים');
 });
 
-
 });
 
 app.post('/login-biometric', (req, res) => {
@@ -1855,9 +1807,6 @@ app.post('/login-biometric', (req, res) => {
   console.log("🔐 התחברות ביומטרית הצליחה עבור:", username);
   res.status(200).send("OK");
 });
-
-
-
 
 // 🔁 קרון שמירה ואיפוס דרך קריאה חיצונית
 app.get('/cron/save-and-reset', (req, res) => {
@@ -1894,7 +1843,7 @@ app.get('/cron/save-and-reset', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.get('/', ensureLoggedIn, (req, res) => {
   const search = req.query.search || '';
-  const drivers = readJSON('drivers.json'); // ✅ טעינה חיה מהקובץ
+  const drivers = readJSON('drivers.json');
   let results = Object.entries(drivers);
 
   if (search) {
@@ -1904,7 +1853,7 @@ app.get('/', ensureLoggedIn, (req, res) => {
   }
 
   res.render('drivers', { drivers: results, role: req.session.role });
-});
+}););
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

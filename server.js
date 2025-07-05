@@ -1822,7 +1822,7 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 // ✅ קרון יומי לשמירת סטטיסטיקות
-  cron.schedule('35 11 * * *', () => {
+  cron.schedule('37 11 * * *', () => {
   console.log("🕛 קרון: שמירת סטטיסטיקות יומית ב־23:59");
   handleSaveAndReset();
 });

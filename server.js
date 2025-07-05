@@ -282,7 +282,7 @@ app.post("/mark-statistics/:id", ensureLoggedIn, (req, res) => {
       });
     });
   } else {
-    // שמירe� רגילה (נהגים בלי מערך coordinations)
+    // שמירה רגילה (נהגים בלי מערך coordinations)
     data.push({
       name: driver.name,
       idNumber: driver.idNumber,
@@ -1175,7 +1175,7 @@ app.post(
 );
 
 app.get("/export-csv", (req, res) => {
-  const driversPath = "/data/drivers.json";
+  const driversPath = path.join(__dirname, "data", "drivers.json");
 
   if (!fs.existsSync(driversPath)) {
     return res.status(404).send("קובץ drivers.json לא קיים.");
@@ -1517,7 +1517,7 @@ app.get("/cron/save-statistics", (req, res) => {
   }
 
   const today = new Date().toISOString().split("T")[0];
-  const statisticsDir = "/data/statistics_logs";
+  const statisticsDir = path.join(__dirname, "data", "statistics_logs");
   const filePath = path.join(statisticsDir, `${today}.json`);
 
   if (!fs.existsSync(statisticsDir)) {
@@ -1755,7 +1755,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
   });
 });
 
-const statisticsLogsDir = "/data/statistics_logs";
+const statisticsLogsDir = path.join(__dirname, "data", "statistics_logs");
 
 app.get("/search-statistics", ensureLoggedIn, (req, res) => {
   const query = (req.query.query || "").toLowerCase().trim();
@@ -1885,8 +1885,8 @@ function saveDailyStatistics() {
   const fs = require("fs");
   const path = require("path");
 
-  const driversPath = "/data/drivers.json";
-  const statsDir = "/data/statistics_logs";
+  const driversPath = path.join(__dirname, "data", "drivers.json");
+  const statsDir = path.join(__dirname, "data", "statistics_logs");
 
   if (!fs.existsSync(driversPath)) return;
   if (!fs.existsSync(statsDir)) fs.mkdirSync(statsDir);
@@ -1948,7 +1948,7 @@ app.get("/cron/reset", (req, res) => {
   }
 
   console.log("🧹 CRON: איפוס drivers.json");
-  const driversPath = "/data/drivers.json";
+  const driversPath = path.join(__dirname, "data", "drivers.json");
   fs.writeFileSync(driversPath, "{}", "utf-8");
   res.send("✅ מאגר הנהגים אופס");
 });

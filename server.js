@@ -156,30 +156,7 @@ app.get('/driver/:id/gatepass', (req, res) => {
     coordination: selectedCoord || null
   });
 });
-app.get('/cron/save-and-reset', async (req, res) => {
-  const secret = req.query.key;
-  if (secret !== 'xk98aZ73B7fsG1qW2s9n') {
-    return res.status(403).send('⛔ לא מורשה');
-  }
 
-  const saveUrl = `https://${req.headers.host}/cron/save-statistics?key=${secret}`;
-  const resetUrl = `https://${req.headers.host}/cron-reset?key=${secret}`;
-
-  const https = require('https');
-
-  const fetch = url => new Promise(resolve => {
-    https.get(url, res => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => resolve(data));
-    }).on('error', err => resolve(`שגיאה: ${err.message}`));
-  });
-
-  const saveResult = await fetch(saveUrl);
-  const resetResult = await fetch(resetUrl);
-
-  res.send(`✅ שמירה: ${saveResult}<br>🔁 איפוס: ${resetResult}`);
-});
 
 
 
@@ -1086,27 +1063,7 @@ app.get('/reset-coordinations', (req, res) => {
   res.send('✅ RESET מהצלחה דרך cron');
 }); // ← סוגר נכון את הנתיב הזה
 
-app.get('/cron-reset', (req, res) => {
-  const secret = req.query.key;
-if (secret !== 'xk98aZ73B7fsG1qW2s9n') {
-    return res.status(403).send('⛔ לא מורשה');
-  }
-  // איפוס פרטי התיאום
-  for (let id in driverData) {
-    driverData[id].coordinationNumber = "לא קיים תיאום להיום";
-    driverData[id].goodsType = "";
-    driverData[id].palletCount = "";
-    driverData[id].driverStatus = false;
-    driverData[id].passedAt = null;
-    driverData[id].truckNumber = null;
-    driverData[id].donorOrg = null;
-    driverData[id].driverStatus = false;  // איפוס הצ'קבוקס
-    driverData[id].passedAt = null;    
-  }
-  saveDrivers();
-  console.log('✅ איפוס תיאומים דרך cron-reset (עם מפתח)');
-  res.send('תיאומים אופסו בהצלחה דרך cron-reset');
-});
+
 
 app.post('/update-coordination-status/:id/:index', ensureLoggedIn, (req, res) => {
   const moment = require('moment-timezone');
@@ -1454,59 +1411,7 @@ app.post('/toggle-flag/:driverId', (req, res) => {
   res.redirect(`/driver/${driverId}`);
 });
 // שמירת סטטיסטיקות יומית לפי תאריך
-app.get('/cron/save-statistics', (req, res) => {
-  const secret = req.query.key;
-  if (secret !== 'xk98aZ73B7fsG1qW2s9n') {
-    return res.status(403).send('⛔ לא מורשה');
-  }
 
-  const today = new Date().toISOString().split('T')[0];
-  const statisticsDir = '/data/statistics_logs';
-  const filePath = path.join(statisticsDir, `${today}.json`);
-
-  if (!fs.existsSync(statisticsDir)) {
-    fs.mkdirSync(statisticsDir, { recursive: true });
-  }
- // ✅ טען את yuval.json
-  const yuvalPath = path.join(__dirname, 'data', 'yuval.json');
-  const yuvalData = fs.existsSync(yuvalPath)
-    ? JSON.parse(fs.readFileSync(yuvalPath, 'utf-8'))
-    : {};
-
-  const passedDrivers = [];
-
-  Object.entries(driverData).forEach(([id, driver]) => {
-    if (Array.isArray(driver.coordinations)) {
-      driver.coordinations.forEach(coord => {
-        if (coord.passed === true) {
-          const key = `${driver.idNumber}-${coord.coordinationNumber}`;
-const yuval = yuvalData[key] === true;
-        passedDrivers.push({
-  name: driver.name,
-  idNumber: driver.idNumber,
-  phone: driver.phone || driver.phoneNumber || '',
-  employer: driver.employer || '',
-  status: driver.status || '',
-  coordinationNumber: coord.coordinationNumber || '',
-  goodsType: coord.goodsType || '',
-  truckNumber: coord.truckNumber || '',
-  donorOrg: coord.donorOrg || '',
-  palletCount: coord.palletCount || '',
-  route: coord.route || '',
-  passed: coord.passed === true,
-  passedAt: coord.passedAt || '',
-  passedBy: coord.checkedBy || '',
-  gatePassPrinted: coord.gatePassPrinted === true
-});
-        }
-      });
-    }
-  });
-
-  fs.writeFileSync(filePath, JSON.stringify(passedDrivers, null, 2), 'utf-8');
-  console.log(`📁 נשמרו ${passedDrivers.length} סטטיסטיקות עבור ${today}`);
-  res.send(`✅ נשמרו ${passedDrivers.length} סטטיסטיקות עבור ${today}`);
-});
 
 app.get('/statistics/:date', ensureLoggedIn, (req, res) => {
   if (!can(req.session.permissions, 'view-statistics')) {
@@ -1915,4 +1820,15 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+// ✅ קרון יומי לשמירת סטטיסטיקות
+  cron.schedule('27 11 * * *', () => {
+  console.log("🕛 קרון: שמירת סטטיסטיקות יומית ב־23:59");
+  handleSaveAndReset();
+});
+
+// ✅ קרון יומי לאיפוס קובץ drivers.json
+cron.schedule('0 0 * * *', () => {
+  console.log("🧹 קרון: איפוס drivers.json ב־00:00");
+  fs.writeFileSync(path.join(__dirname, 'data', 'drivers.json'), '{}', 'utf-8');
 });

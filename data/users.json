@@ -1,7 +1,7 @@
 {
   "barnoy": {
     "username": "barnoy",
-    "passwordHash": "$2b$12$EgsNFPaBVznT4E5fJQgsjOKj3lHerx3Rpps5vpt3tmfakRuxuvGVi",
+    "passwordHash": "$2b$12$YFwI1KvyOkBtjPwAlRRhR.d1DCPU.Pdung6m3LwEW0lnViayApsSO",
     "role": "admin",
     "fullName": "בר-נוי",
     "permissions": [
@@ -16,7 +16,7 @@
       "view-statistics",
       "add-coordination"
     ],
-    "lastPasswordChange": "2025-06-21T19:27:37.519Z",
+    "lastPasswordChange": "2025-07-06T00:06:08.922Z",
     "mustChangePassword": false
   },
   "gabriel": {

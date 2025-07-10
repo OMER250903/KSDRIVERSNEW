@@ -16,7 +16,7 @@ function readJSON(filepath) {
   app.use(express.json()); // ← ואז משתמשים
   const fullPath = path.join(__dirname, filepath);
   if (!fs.existsSync(fullPath)) return [];
-  const data = fs.readFileSync(fullPath, "utf-8");
+const data = fs.readFileSync(fullPath, "utf-8");
   return JSON.parse(data);
 }
 
@@ -129,7 +129,9 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-const upload = multer({ storage });
+
+const upload = multer({ storage: multer.memoryStorage() });
+
 
 app.get("/driver/:id/gatepass", (req, res) => {
   const driverId = req.params.id;
@@ -385,9 +387,7 @@ app.post("/add-driver", (req, res) => {
   driverData[newDriverId] = newDriver;
   writeJSON("data/drivers.json", driverData);
 
-  res.redirect(
-    "/login?biometricSetup=true&username=" + encodeURIComponent(user.username),
-  );
+  res.redirect("/");
 });
 
 // דף פרטי נהג
@@ -653,7 +653,7 @@ app.post(
       return res.status(400).send("לא הועלה קובץ");
     }
 
-    const fileContent = fs.readFileSync(req.file.path, "utf-8");
+    const fileContent = req.file.buffer.toString("utf-8");
     parseCSV(fileContent, { columns: true, trim: true }, (err, records) => {
       if (err || !records || records.length === 0) {
         return res.status(400).send("⚠️ הקובץ ריק או לא תקין");
@@ -755,8 +755,7 @@ app.post(
           console.log(`נוסף נהג חדש: ${driverInfo.name}`);
         }
       }
-
-      saveDrivers();
+    saveDrivers();
       res.render("success", { message: "✅ תיאומים סונכרנו בהצלחה!" });
     });
   },
@@ -1130,22 +1129,14 @@ app.get("/cron-reset", (req, res) => {
   if (secret !== "xk98aZ73B7fsG1qW2s9n") {
     return res.status(403).send("⛔ לא מורשה");
   }
-  // איפוס פרטי התיאום
-  for (let id in driverData) {
-    driverData[id].coordinationNumber = "לא קיים תיאום להיום";
-    driverData[id].goodsType = "";
-    driverData[id].palletCount = "";
-    driverData[id].driverStatus = false;
-    driverData[id].passedAt = null;
-    driverData[id].truckNumber = null;
-    driverData[id].donorOrg = null;
-    driverData[id].driverStatus = false; // איפוס הצ'קבוקס
-    driverData[id].passedAt = null;
-  }
-  saveDrivers();
-  console.log("✅ איפוס תיאומים דרך cron-reset (עם מפתח)");
-  res.send("תיאומים אופסו בהצלחה דרך cron-reset");
+
+  driverData = {}; // ⬅️ מחיקה מלאה של הנתונים
+  saveDrivers();   // ⬅️ שמירה לקובץ drivers.json
+
+  console.log("✅ כל הנתונים נמחקו מ־drivers.json דרך cron-reset");
+  res.send("כל רשימת הנהגים אופסה בהצלחה!");
 });
+
 
 app.post(
   "/update-coordination-status/:id/:index",

@@ -1557,6 +1557,7 @@ app.get("/cron/save-statistics", (req, res) => {
             donorOrg: coord.donorOrg || "",
             palletCount: coord.palletCount || "",
             route: coord.route || "",
+      rejected: false,
             passed: coord.passed === true,
             passedAt: coord.passedAt || "",
             passedBy: coord.checkedBy || "",
@@ -1738,6 +1739,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
                 passedAt: coord.passedAt || "",
                 gatePassPrinted: coord.gatePassPrinted === true,
                 route: coord.route || "",
+      rejected: false,
               });
             }
 
@@ -1919,6 +1921,7 @@ function saveDailyStatistics() {
           donorOrg: coord.donorOrg || "",
           palletCount: coord.palletCount || "",
           route: coord.route || "",
+      rejected: false,
           passed: true,
           passedAt: coord.passedAt || "",
           passedBy: coord.checkedBy || "",

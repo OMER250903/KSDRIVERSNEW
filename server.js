@@ -275,8 +275,8 @@ app.post("/mark-statistics/:id", ensureLoggedIn, (req, res) => {
         coordinationNumber: coord.coordinationNumber || "",
         goodsType: coord.goodsType || "",
         donorOrg: coord.donorOrg || "",
-        passedAt: driver.passedAt || "",
-      );
+        passedAt: driver.passedAt || ""
+      });
     });
   } else {
     // שמירה רגילה (נהגים בלי מערך coordinations)
@@ -483,8 +483,8 @@ app.post("/edit-driver/:id", ensureLoggedIn, (req, res) => {
     }
 
     const updatedCoord = {
-      ...coord,
-      coordinationNumber: coordinationNumbers[currentEditableIndex] || "",
+    ...coord,
+    coordinationNumber: coordinationNumbers[currentEditableIndex] || "",
       goodsType: goodsTypes[currentEditableIndex] || "",
       palletCount: palletCounts[currentEditableIndex] || "",
       donorOrg: donorOrgs[currentEditableIndex] || "",
@@ -1219,8 +1219,8 @@ app.get("/export-csv", (req, res) => {
         coordinationNumber: driver.coordinationNumber || "",
         goodsType: driver.goodsType || "",
         donorOrg: driver.donorOrg || "",
-        passedAt: driver.passedAt || "",
-      );
+        passedAt: driver.passedAt || ""
+      });
     }
   });
 

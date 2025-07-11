@@ -406,7 +406,7 @@ app.get("/driver/:id", ensureLoggedIn, (req, res) => {
     coordinationNumber: driver.coordinationNumber || "לנהג אין תיאום להיום",
     goodsType: driver.goodsType || "לא צויין",
     palletCount: driver.palletCount || "לא צויין",
-  ;
+  };
 
   const isAdmin = req.session.role === "admin";
   res.render("driver", {

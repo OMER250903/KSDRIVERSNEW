@@ -362,6 +362,9 @@ app.post("/add-driver", (req, res) => {
     truckNumber: truckNumber[i] || "",
     donorOrg: donorOrg[i] || "",
     route: route[i] || "", // ✅ כאן נוסף השדה
+    rejected: false,
+    rejectionReason: "",
+    rejectedAt: ""
     passed: false,
     passedAt: null,
     checkedBy: null,
@@ -682,6 +685,9 @@ app.post(
           truckNumber: record["מספר משאית"] || "",
           donorOrg: record["ארגון תורם"] || "",
           route: record["נתיב"] || "", // ✅ הוספנו את השדה החדש
+          rejected: false,
+          rejectionReason: "",
+          rejectedAt: ""
           passed: false,
           passedAt: null,
         };
@@ -1346,6 +1352,9 @@ app.post("/driver/:id/add-coordination", ensureLoggedIn, (req, res) => {
     truckNumber: req.body.truckNumber || "",
     donorOrg: req.body.donorOrg || "",
     route: req.body.route || "", // ✅ הוספה חדשה
+    rejected: false,
+    rejectionReason: "",
+    rejectedAt: ""
     passed: false,
     passedAt: null,
     checkedBy: null,

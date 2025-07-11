@@ -276,7 +276,7 @@ app.post("/mark-statistics/:id", ensureLoggedIn, (req, res) => {
         goodsType: coord.goodsType || "",
         donorOrg: coord.donorOrg || "",
         passedAt: driver.passedAt || "",
-      });
+      );
     });
   } else {
     // שמירה רגילה (נהגים בלי מערך coordinations)
@@ -289,7 +289,7 @@ app.post("/mark-statistics/:id", ensureLoggedIn, (req, res) => {
       goodsType: driver.goodsType || "",
       donorOrg: driver.donorOrg || "",
       passedAt: driver.passedAt || "",
-    });
+    );
   }
 
   fs.writeFileSync(statsFile, JSON.stringify(data, null, 2), "utf-8");
@@ -368,7 +368,7 @@ app.post("/add-driver", (req, res) => {
     passed: false,
     passedAt: null,
     checkedBy: null,
-  }));
+  ));
 
   const newDriver = {
     name,
@@ -406,7 +406,7 @@ app.get("/driver/:id", ensureLoggedIn, (req, res) => {
     coordinationNumber: driver.coordinationNumber || "לנהג אין תיאום להיום",
     goodsType: driver.goodsType || "לא צויין",
     palletCount: driver.palletCount || "לא צויין",
-  };
+  ;
 
   const isAdmin = req.session.role === "admin";
   res.render("driver", {
@@ -490,7 +490,7 @@ app.post("/edit-driver/:id", ensureLoggedIn, (req, res) => {
       donorOrg: donorOrgs[currentEditableIndex] || "",
       truckNumber: truckNumbers[currentEditableIndex] || "",
       route: routes[currentEditableIndex] || "", // ✅ נתיב
-    };
+    ;
 
     currentEditableIndex++;
     return updatedCoord;
@@ -690,7 +690,7 @@ app.post(
           rejectedAt: ""
           passed: false,
           passedAt: null,
-        };
+        ;
 
         if (!groupedById[idNumber]) {
           groupedById[idNumber] = {
@@ -1207,7 +1207,7 @@ app.get("/export-csv", (req, res) => {
             goodsType: coord.goodsType || "",
             donorOrg: coord.donorOrg || "",
             passedAt: coord.passedAt || "",
-          });
+          );
         }
       });
     } else if (driver.driverStatus === true) {
@@ -1220,7 +1220,7 @@ app.get("/export-csv", (req, res) => {
         goodsType: driver.goodsType || "",
         donorOrg: driver.donorOrg || "",
         passedAt: driver.passedAt || "",
-      });
+      );
     }
   });
 
@@ -1358,7 +1358,7 @@ app.post("/driver/:id/add-coordination", ensureLoggedIn, (req, res) => {
     passed: false,
     passedAt: null,
     checkedBy: null,
-  };
+  ;
 
   driverData[driverId].coordinations = driverData[driverId].coordinations || [];
   driverData[driverId].coordinations.push(newCoordination);
@@ -1570,7 +1570,7 @@ app.get("/cron/save-statistics", (req, res) => {
             passedAt: coord.passedAt || "",
             passedBy: coord.checkedBy || "",
             gatePassPrinted: coord.gatePassPrinted === true,
-          });
+          );
         }
       });
     }
@@ -1685,7 +1685,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
               coordinationNumber: driver.coordinationNumber || "-",
               donorOrg: driver.donorOrg || "-",
               reason: driver.reason,
-            });
+            );
           }
 
           if (driver.donorOrg) {
@@ -1717,7 +1717,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
               coordinationNumber: coord.coordinationNumber || "-",
               donorOrg: coord.donorOrg || "-",
               reason: coord.rejectionReason || "לא צוינה סיבה",
-            });
+            );
           }
 
           if (coord.passed === true) {
@@ -1747,7 +1747,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
                 passedAt: coord.passedAt || "",
                 gatePassPrinted: coord.gatePassPrinted === true,
                 route: coord.route || "",
-              });
+              );
             }
 
             if (coord.donorOrg) {
@@ -1932,7 +1932,7 @@ function saveDailyStatistics() {
           passedAt: coord.passedAt || "",
           passedBy: coord.checkedBy || "",
           gatePassPrinted: coord.gatePassPrinted || false,
-        });
+        );
       }
     }
   }

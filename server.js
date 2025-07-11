@@ -1354,11 +1354,11 @@ app.post("/driver/:id/add-coordination", ensureLoggedIn, (req, res) => {
     route: req.body.route || "", // ✅ הוספה חדשה
     rejected: false,
     rejectionReason: "",
-    rejectedAt: ""
+    rejectedAt: "",
     passed: false,
     passedAt: null,
     checkedBy: null,
-  ;
+  };
 
   driverData[driverId].coordinations = driverData[driverId].coordinations || [];
   driverData[driverId].coordinations.push(newCoordination);

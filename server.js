@@ -12,6 +12,18 @@ const usersPath = path.join(__dirname, "data", "users.json");
 const loginAttemptsPath = path.join(__dirname, "data", "login_attempts.json");
 function readJSON(filepath) {
   const moment = require("moment-timezone");
+function readJSON(filepath) {
+  const fullPath = path.join(__dirname, filepath);
+  if (!fs.existsSync(fullPath)) return {};
+  try {
+    const data = fs.readFileSync(fullPath, "utf-8").trim();
+    return data ? JSON.parse(data) : {};
+  } catch (err) {
+    console.error(`⚠️ שגיאה בקריאת קובץ ${filepath}:`, err);
+    return {};
+  }
+}
+
   const israelTime = moment.tz(new Date(), "Asia/Jerusalem").format("HH:mm");
   app.use(express.json()); // ← ואז משתמשים
   const fullPath = path.join(__dirname, filepath);
@@ -41,6 +53,12 @@ const permissions = {
   supervisor: ["add-driver", "edit-driver"],
   visitor: ["view-driver"],
 };
+
+const rejectionsPath = path.join(__dirname, "data", "rejections.json");
+const rejectionsData = fs.existsSync(rejectionsPath)
+  ? JSON.parse(fs.readFileSync(rejectionsPath, "utf-8"))
+  : {};
+
 
 // ⬇️ כאן תוסיף את הפונקציה מחוץ לאובייקט
 function can(roleOrPermissions, action) {
@@ -256,6 +274,11 @@ function saveDrivers() {
   console.log("נתונים נשמרו ב־drivers.json");
 }
 
+function saveRejections() {
+  fs.writeFileSync(rejectionsPath, JSON.stringify(rejections, null, 2), "utf-8");
+}
+
+
 const statsFile = path.join(__dirname, "logs", "passed-drivers.json");
 
 app.post("/mark-statistics/:id", ensureLoggedIn, (req, res) => {
@@ -386,8 +409,7 @@ app.post("/add-driver", (req, res) => {
     status: "מאושר",
     notes: [],
     hasBlock: false,
-    image:
-      "https://cdn.glitch.global/64a24585-7ccf-4cfb-bfc3-67e1b6c37fe4/%D7%90%D7%99%D7%A9%201.png?v=1748175811296",
+    image: "/uploads/images.png",
     driverStatus: false,
     passedAt: null,
     coordinations,
@@ -409,23 +431,28 @@ app.get("/driver/:id", ensureLoggedIn, (req, res) => {
     return res.status(404).send("Driver not found");
   }
 
-  const coordinationData = {
-    coordinationNumber: driver.coordinationNumber || "לנהג אין תיאום להיום",
-    goodsType: driver.goodsType || "לא צויין",
-    palletCount: driver.palletCount || "לא צויין",
-  };
+  // טען נתוני סירוב עבור כל תיאום
+  driver.coordinations = (driver.coordinations || []).map((coord) => {
+    const key = `${driver.idNumber}-${coord.coordinationNumber}`;
+    const rejectionData = rejections[key] || {};
+    return {
+      ...coord,
+      rejected: rejectionData.rejected || false,
+      rejectionReason: rejectionData.rejectionReason || "",
+      rejectedAt: rejectionData.rejectedAt || null,
+    };
+  });
 
   const isAdmin = req.session.role === "admin";
   res.render("driver", {
     driverId,
     driver,
-    coordinationData,
     isAdmin,
     role: req.session.role || "visitor", // ✅ חובה!
   });
 });
 
-// עריכת נהג
+
 app.get("/edit-driver/:id", ensureLoggedIn, (req, res) => {
   if (!can(req.session.permissions, "edit-driver")) {
     return res.status(403).send("אין הרשאה לערוך נהגים");
@@ -705,8 +732,7 @@ app.post(
             employer: record["שם מעסיק"] || "",
             employerPhone: record["טלפון מעסיק"] || "",
             status: isBlacklisted ? "מנוע" : "מאושר",
-            image:
-              "https://cdn.glitch.global/64a24585-7ccf-4cfb-bfc3-67e1b6c37fe4/%D7%90%D7%99%D7%A9%201.png?v=1748175811296",
+            image: "/uploads/images.png",
             driverStatus: false,
             passedAt: null,
             events: "",
@@ -837,6 +863,21 @@ app.post("/update-yuval", (req, res) => {
   console.log(`💾 נשמר ב־yuval.json: ${key} = ${value}`);
   res.sendStatus(200);
 });
+const rejectionsPath = path.join(__dirname, "data", "rejections.json");
+let rejections = {};
+
+if (fs.existsSync(rejectionsPath)) {
+  try {
+    const raw = fs.readFileSync(rejectionsPath, "utf-8").trim();
+    rejections = raw ? JSON.parse(raw) : {};
+  } catch (err) {
+    console.error("❌ שגיאה בקריאת rejections.json:", err);
+    rejections = {};
+  }
+} else {
+  fs.writeFileSync(rejectionsPath, "{}", "utf-8");
+}
+
 
 // התנתקות
 app.get("/logout", (req, res) => {
@@ -1400,11 +1441,20 @@ app.post(
       return res.status(404).send("Driver not found or no coordinations");
     }
 
+    // 🆕 מחיקת סירוב מהקובץ
+    const coord = driverData[driverId].coordinations[index];
+    if (coord) {
+      const key = `${driverData[driverId].idNumber}-${coord.coordinationNumber}`;
+      delete rejections[key];
+      saveRejections();
+    }
+
     const updatedCoordinations = driverData[driverId].coordinations.filter((_, i) => i !== index);
     updateDriver(driverId, { coordinations: updatedCoordinations });
     res.redirect(`/driver/${driverId}`);
   },
 );
+
 
 app.get("/drivers-list", ensureLoggedIn, (req, res) => {
   const list = Object.values(driverData).map((driver) => ({
@@ -1446,36 +1496,26 @@ app.post("/force-upload-coordinations", ensureLoggedIn, (req, res) => {
 
   res.render("success", { message: "✅ הקובץ הועלה למרות מנועים" });
 });
+
 app.post("/reject-driver", ensureLoggedIn, (req, res) => {
   const { driverId, coordinationNumber, reason } = req.body;
-  const drivers = readJSON("./data/drivers.json");
 
-  const driver = drivers[driverId];
-  if (!driver || !Array.isArray(driver.coordinations)) {
-    return res.status(404).send("❌ נהג לא נמצא או אין לו תיאומים");
-  }
+  const driver = driverData[driverId];
+  if (!driver) return res.status(404).send("נהג לא נמצא");
 
-  const coord = driver.coordinations.find(
-    (c) => c.coordinationNumber === coordinationNumber,
-  );
+  const key = `${driver.idNumber}-${coordinationNumber}`;
+  rejections[key] = {
+    rejected: true,
+    rejectionReason: reason,
+    rejectedAt: new Date().toLocaleString("he-IL", {
+      timeZone: "Asia/Jerusalem"
+    })
+  };
 
-  if (!coord) {
-    return res.status(404).send("❌ תיאום לא נמצא אצל הנהג");
-  }
-
-  if (!coord.passed) {
-    return res.status(400).send("❌ ניתן לסרב רק לתיאום שעבר בקרה.");
-  }
-
-  coord.rejected = true;
-  coord.rejectionReason = reason;
-  coord.rejectedAt = new Date().toLocaleString("he-IL", {
-    timeZone: "Asia/Jerusalem",
-  });
-
-  writeJSON("./data/drivers.json", drivers);
+  saveRejections();
   res.redirect(`/driver/${driverId}`);
 });
+
 
 app.get("/reject-driver-form", ensureLoggedIn, (req, res) => {
   const { coordinationNumber } = req.query;
@@ -1535,35 +1575,43 @@ app.get("/cron/save-statistics", (req, res) => {
     return res.status(403).send("⛔ לא מורשה");
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  const moment = require("moment-timezone");
+const today = moment().tz("Asia/Jerusalem").format("YYYY-MM-DD");
   const statisticsDir = path.join(__dirname, "data", "statistics_logs");
   const filePath = path.join(statisticsDir, `${today}.json`);
 
   if (!fs.existsSync(statisticsDir)) {
     fs.mkdirSync(statisticsDir, { recursive: true });
   }
-  // ✅ טען את yuval.json
+
   const yuvalPath = path.join(__dirname, "data", "yuval.json");
   const yuvalData = fs.existsSync(yuvalPath)
     ? JSON.parse(fs.readFileSync(yuvalPath, "utf-8"))
     : {};
 
+  const rejectionsPath = path.join(__dirname, "data", "rejections.json");
+  const rejectionsData = fs.existsSync(rejectionsPath)
+    ? JSON.parse(fs.readFileSync(rejectionsPath, "utf-8"))
+    : {};
+
+  const driverPath = path.join(__dirname, "data", "drivers.json");
+  const driverData = fs.existsSync(driverPath)
+    ? JSON.parse(fs.readFileSync(driverPath, "utf-8"))
+    : {};
+
   const passedDrivers = [];
+  const rejectedDrivers = [];
 
   Object.entries(driverData).forEach(([id, driver]) => {
     if (Array.isArray(driver.coordinations)) {
       driver.coordinations.forEach((coord) => {
+        const key = `${driver.idNumber}-${coord.coordinationNumber}`;
+
         if (coord.passed === true) {
-          const key = `${driver.idNumber}-${coord.coordinationNumber}`;
-          const yuval = yuvalData[key] === true;
           passedDrivers.push({
             name: driver.name,
             idNumber: driver.idNumber,
-            phone:
-              ((driver.phone || driver.phoneNumber || "") + "").padStart(
-                10,
-                "0",
-              ) || "—",
+            phone: ((driver.phone || driver.phoneNumber || "") + "").padStart(10, "0") || "—",
             employer: driver.employer || "",
             status: driver.status || "",
             coordinationNumber: coord.coordinationNumber || "",
@@ -1572,20 +1620,39 @@ app.get("/cron/save-statistics", (req, res) => {
             donorOrg: coord.donorOrg || "",
             palletCount: coord.palletCount || "",
             route: coord.route || "",
-            passed: coord.passed === true,
+            passed: true,
             passedAt: coord.passedAt || "",
             passedBy: coord.checkedBy || "",
             gatePassPrinted: coord.gatePassPrinted === true,
+            yuval: yuvalData[key] === true
+          });
+        }
+
+        if (rejectionsData[key]) {
+          rejectedDrivers.push({
+            name: driver.name,
+            idNumber: driver.idNumber,
+            coordinationNumber: coord.coordinationNumber || "-",
+            donorOrg: coord.donorOrg || "-",
+            reason: rejectionsData[key].rejectionReason || "לא צוינה סיבה",
+            rejectedAt: rejectionsData[key].rejectedAt || ""
           });
         }
       });
     }
   });
 
-  fs.writeFileSync(filePath, JSON.stringify(passedDrivers, null, 2), "utf-8");
-  console.log(`📁 נשמרו ${passedDrivers.length} סטטיסטיקות עבור ${today}`);
-  res.send(`✅ נשמרו ${passedDrivers.length} סטטיסטיקות עבור ${today}`);
+  const fullStats = {
+    passedDrivers,
+    rejectedDrivers
+  };
+
+  fs.writeFileSync(filePath, JSON.stringify(fullStats, null, 2), "utf-8");
+  console.log(`📁 נשמרו ${passedDrivers.length} מאושרים ו־${rejectedDrivers.length} סירובים עבור ${today}`);
+  res.send(`✅ נשמרו ${passedDrivers.length} מאושרים ו־${rejectedDrivers.length} סירובים עבור ${today}`);
 });
+
+
 
 app.get("/statistics/:date", ensureLoggedIn, (req, res) => {
   if (!can(req.session.permissions, "view-statistics")) {
@@ -1593,37 +1660,8 @@ app.get("/statistics/:date", ensureLoggedIn, (req, res) => {
   }
 
   const selectedDate = req.params.date;
-  const filePath = path.join(
-    __dirname,
-    "data",
-    "statistics_logs",
-    `${selectedDate}.json`,
-  );
+  const filter = (req.query.q || "").toLowerCase().trim();
   const yuvalPath = path.join(__dirname, "data", "yuval.json");
-
-  const allStats = fs.existsSync(filePath)
-    ? JSON.parse(fs.readFileSync(filePath, "utf-8"))
-    : [];
-
-  // כל הנהגים בקובץ הזה עברו תיאום, אין צורך בפילטר לפי status
-  const filter = (req.query.q || "").toLowerCase();
-  let passedDrivers = allStats.map((driver) => ({
-    ...driver,
-    phone: driver.phone || driver.phoneNumber || "—",
-  }));
-
-  if (filter) {
-    passedDrivers = passedDrivers.filter((d) =>
-      Object.values(d).some((val) => (val + "").toLowerCase().includes(filter)),
-    );
-  }
-
-  // פילוח ארגונים
-  const donorsSummary = {};
-  passedDrivers.forEach((entry) => {
-    const org = entry.donorOrg || "ללא שיוך";
-    donorsSummary[org] = (donorsSummary[org] || 0) + 1;
-  });
 
   let yuvalData = {};
   if (fs.existsSync(yuvalPath)) {
@@ -1634,18 +1672,67 @@ app.get("/statistics/:date", ensureLoggedIn, (req, res) => {
     }
   }
 
-  // אין לנו סירובים בקובץ היסטורי
+  const passedDrivers = [];
   const refusedCoordinations = [];
+  const donorsSummary = {};
+
+  const filePath = path.join(__dirname, "data", "statistics_logs", `${selectedDate}.json`);
+  if (fs.existsSync(filePath)) {
+    try {
+      const content = fs.readFileSync(filePath, "utf-8");
+      const json = JSON.parse(content);
+
+      let passed = [];
+      let refused = [];
+
+      if (Array.isArray(json)) {
+        passed = json;
+      } else {
+        passed = json.passedDrivers || [];
+        refused = json.rejectedDrivers || [];
+      }
+
+      // עברו בקרה
+      passed.forEach((driver) => {
+        const match =
+          !filter ||
+          Object.values(driver).join(" ").toLowerCase().includes(filter);
+        if (match) passedDrivers.push(driver);
+
+        if (driver.donorOrg) {
+          donorsSummary[driver.donorOrg] =
+            (donorsSummary[driver.donorOrg] || 0) + 1;
+        }
+      });
+
+      // סירובים
+      refused.forEach((ref) => {
+        refusedCoordinations.push({
+          coordinationNumber: ref.coordinationNumber || "-",
+          donorOrg: ref.donorOrg || "-",
+          reason: ref.reason || "לא צוינה סיבה",
+          rejectedAt: ref.rejectedAt || "",
+        });
+      });
+
+    } catch (err) {
+      console.error("⚠️ שגיאה בקריאת קובץ סטטיסטיקה היסטורית:", err);
+    }
+  }
 
   res.render("statistics", {
     passedDrivers,
     refusedCoordinations,
     count: passedDrivers.length,
     donorsSummary,
-    today: selectedDate,
-    yuvalData,
+    filter,
+    selectedDate,
+    today: false,
+    yuvalData: yuvalData || {},
   });
 });
+
+
 
 app.get("/statistics", ensureLoggedIn, (req, res) => {
   if (!can(req.session.permissions, "view-statistics")) {
@@ -1675,30 +1762,41 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
       __dirname,
       "data",
       "statistics_logs",
-      `${selectedDate}.json`,
+      `${selectedDate}.json`
     );
     if (fs.existsSync(filePath)) {
       try {
         const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-        data.forEach((driver) => {
+
+        const historicalPassed = data.passedDrivers || [];
+        const historicalRejected = data.rejectedDrivers || [];
+
+        historicalPassed.forEach((driver) => {
           const match =
             !filter ||
             Object.values(driver).join(" ").toLowerCase().includes(filter);
           if (match) passedDrivers.push(driver);
-
-          if (driver.reason) {
-            refusedCoordinations.push({
-              coordinationNumber: driver.coordinationNumber || "-",
-              donorOrg: driver.donorOrg || "-",
-              reason: driver.reason,
-            });
-          }
 
           if (driver.donorOrg) {
             donorsSummary[driver.donorOrg] =
               (donorsSummary[driver.donorOrg] || 0) + 1;
           }
         });
+
+        historicalRejected.forEach((rejection) => {
+          const match =
+            !filter ||
+            Object.values(rejection).join(" ").toLowerCase().includes(filter);
+          if (match) {
+            refusedCoordinations.push({
+              coordinationNumber: rejection.coordinationNumber || "-",
+              donorOrg: rejection.donorOrg || "-",
+              reason: rejection.reason || "לא צוינה סיבה",
+              rejectedAt: rejection.rejectedAt || ""
+            });
+          }
+        });
+
       } catch (err) {
         console.error("⚠️ שגיאה בקריאת קובץ סטטיסטיקה היסטורית:", err);
       }
@@ -1706,23 +1804,35 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
   } else {
     // === סטטיסטיקה חיה מהמערכת ===
     const statsPath = path.join(__dirname, "data", "drivers.json");
+    const rejectionsPath = path.join(__dirname, "data", "rejections.json");
+
     let driverData = {};
+    let rejectionsData = {};
     try {
       const fileContent = fs.readFileSync(statsPath, "utf-8").trim();
       driverData = fileContent ? JSON.parse(fileContent) : {};
     } catch (err) {
       console.error("⚠️ שגיאה בטעינת drivers.json:", err);
-      driverData = {};
+    }
+
+    try {
+      const rejectContent = fs.readFileSync(rejectionsPath, "utf-8").trim();
+      rejectionsData = rejectContent ? JSON.parse(rejectContent) : {};
+    } catch (err) {
+      console.error("⚠️ שגיאה בטעינת rejections.json:", err);
     }
 
     Object.entries(driverData).forEach(([driverId, driver]) => {
       if (Array.isArray(driver.coordinations)) {
         driver.coordinations.forEach((coord) => {
-          if (coord.rejected === true) {
+          const coordKey = `${driver.idNumber}-${coord.coordinationNumber}`;
+          if (rejectionsData[coordKey]) {
+            const { rejectionReason, rejectedAt } = rejectionsData[coordKey];
             refusedCoordinations.push({
               coordinationNumber: coord.coordinationNumber || "-",
               donorOrg: coord.donorOrg || "-",
-              reason: coord.rejectionReason || "לא צוינה סיבה",
+              reason: rejectionReason || "לא צוינה סיבה",
+              rejectedAt: rejectedAt || ""
             });
           }
 
@@ -1752,7 +1862,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
                 palletCount: coord.palletCount || "",
                 passedAt: coord.passedAt || "",
                 gatePassPrinted: coord.gatePassPrinted === true,
-                route: coord.route || "",
+                route: coord.route || ""
               });
             }
 
@@ -1774,7 +1884,7 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
     filter,
     selectedDate: selectedDate || "",
     today: !selectedDate,
-    yuvalData: yuvalData || {},
+    yuvalData: yuvalData || {}
   });
 });
 

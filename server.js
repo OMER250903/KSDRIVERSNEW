@@ -863,8 +863,6 @@ app.post("/update-yuval", (req, res) => {
   console.log(`💾 נשמר ב־yuval.json: ${key} = ${value}`);
   res.sendStatus(200);
 });
-const rejectionsPath = path.join(__dirname, "data", "rejections.json");
-let rejections = {};
 
 if (fs.existsSync(rejectionsPath)) {
   try {
@@ -1589,10 +1587,7 @@ const today = moment().tz("Asia/Jerusalem").format("YYYY-MM-DD");
     ? JSON.parse(fs.readFileSync(yuvalPath, "utf-8"))
     : {};
 
-  const rejectionsPath = path.join(__dirname, "data", "rejections.json");
-  const rejectionsData = fs.existsSync(rejectionsPath)
-    ? JSON.parse(fs.readFileSync(rejectionsPath, "utf-8"))
-    : {};
+
 
   const driverPath = path.join(__dirname, "data", "drivers.json");
   const driverData = fs.existsSync(driverPath)
@@ -1804,7 +1799,6 @@ app.get("/statistics", ensureLoggedIn, (req, res) => {
   } else {
     // === סטטיסטיקה חיה מהמערכת ===
     const statsPath = path.join(__dirname, "data", "drivers.json");
-    const rejectionsPath = path.join(__dirname, "data", "rejections.json");
 
     let driverData = {};
     let rejectionsData = {};

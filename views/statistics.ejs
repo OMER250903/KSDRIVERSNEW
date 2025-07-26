@@ -1,775 +1,775 @@
 
-                                        <!DOCTYPE html>
-                                        <html lang="he" dir="rtl">
-                                        <head>
-                                          <meta charset="UTF-8">
-                                          <title>דו"ח מעבר בקרה</title>
-                                          <link rel="stylesheet" href="/style.css">
-                                          <style>
-                                            body {
-                                              font-family: 'Assistant', sans-serif;
-                                              background-color: #f3f6fa;
-                                              margin: 0;
-                                              padding: 0;
-                                            }
-                                            header.main-header {
-                                              background-color: #004080;
-                                              color: white;
-                                              padding: 20px 40px;
-                                              display: flex;
-                                              align-items: center;
-                                              justify-content: center;
-                                              position: relative;
-                                            }
-                                            .page-title {
-                                          font-size: 35px;
-                                          color: white;
-                                          margin: 0 auto;
-                                          font-weight: bold;
-                                        }
-
-                                            }
-                                            .logo {
-                                          height: 80px;
-                                          position: absolute;
-                                          right: 20px;
-                                        }
-
-                                           .container {
-                                          max-width: 1400px;
-                                          margin: 40px auto;
-                                          padding: 0 30px;
-                                        }
-
-                                            .search-bar {
-                                              width: 100%;
-                                              padding: 12px 16px;
-                                              font-size: 16px;
-                                              border-radius: 8px;
-                                              border: 1px solid #ccc;
-                                              margin: 20px 0;
-                                            }
-                                            .excel-button {
-                                              background-color: #1d6f42;
-                                              color: white;
-                                              padding: 10px 20px;
-                                              font-weight: bold;
-                                              border: none;
-                                              border-radius: 8px;
-                                              cursor: pointer;
-                                              text-decoration: none;
-                                              display: inline-block;
-                                            }
-                                            .excel-button:hover {
-                                              background-color: #145c35;
-                                            }
-                                            .excel-button img {
-                                              vertical-align: middle;
-                                              margin-left: 8px;
-                                              width: 20px;
-                                            }
-                                            table.drivers-table {
-                                              width: 100%;
-                                              border-collapse: collapse;
-                                              background: white;
-                                              border-radius: 8px;
-                                              overflow: hidden;
-                                              box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-                                            }
-                                          table.drivers-table th {
-                                          background-color: #004080;
-                                          color: white;
-                                          font-weight: bold;
-                                          font-size: 16px;
-                                          cursor: pointer;
-                                          padding: 16px;
-                                        }
-
-                                          table.drivers-table td {
-                                          color: #222;
-                                          font-size: 17px;
-                                          padding: 20px 18px;
-                                          border-bottom: 1px solid #ddd;
-                                          text-align: center;
-                                        }
-
-                                            table.drivers-table tbody tr:hover {
-                                              background-color: #f0f4ff;
-                                            }
-                                            .statistics-button {
-                                              display: inline-block;
-                                              margin-top: 30px;
-                                              font-weight: bold;
-                                              background-color: #004080;
-                                              color: white;
-                                              padding: 10px 20px;
-                                              border-radius: 8px;
-                                              text-decoration: none;
-                                            }
-
-                                            .date-form {
-                                          background-color: #ffffff;
-                                          border: 1px solid #cfdfff;
-                                          padding: 20px;
-                                          border-radius: 12px;
-                                          max-width: 420px;
-                                          margin: 20px auto;
-                                          font-family: 'Assistant', sans-serif;
-                                          direction: rtl;
-                                          text-align: right;
-                                          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-                                        }
-
-                                        .date-form label {
-                                          display: block;
-                                          font-weight: bold;
-                                          margin-bottom: 10px;
-                                          font-size: 16px;
-                                          color: #004080;
-                                        }
-
-                                        .date-controls {
-                                          display: flex;
-                                          gap: 10px;
-                                          align-items: center;
-                                        }
-
-                                        .date-controls input[type="date"] {
-                                          padding: 8px 10px;
-                                          font-size: 15px;
-                                          border-radius: 8px;
-                                          border: 1px solid #999;
-                                          flex-grow: 1;
-                                        }
-
-                                        .date-controls button {
-                                          background-color: #004080;
-                                          color: white;
-                                          border: none;
-                                          padding: 8px 16px;
-                                          border-radius: 8px;
-                                          font-weight: bold;
-                                          cursor: pointer;
-                                          transition: background-color 0.3s ease;
-                                        }
-
-                                        .date-controls button:hover {
-                                          background-color: #002c5f;
-                                        }
-
-.status-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin: 30px 0;
-  justify-content: center;
-}
-
-.status-box {
-  background: linear-gradient(to bottom, #eaf3ff, #ffffff);
-  border: 1px solid #a0c4ff;
-  border-radius: 16px;
-  padding: 24px;
-  min-width: 300px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  direction: rtl;
-  text-align: right;
-  transition: 0.3s ease;
-}
-
-.status-box:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.status-title {
-  font-weight: bold;
-  font-size: 22px;
-  color: #003366;
-  margin-bottom: 18px;
-  border-bottom: 2px solid #004080;
-  padding-bottom: 6px;
-}
-
-.status-item {
-  font-size: 17px;
-  margin-bottom: 8px;
-  color: #333;
-  line-height: 1.7;
-}
-
-.status-sub {
-  font-size: 15px;
-  color: #d32f2f;
-  margin-top: 16px;
-  font-weight: bold;
-}
-
-.status-summary {
-  font-size: 17px;
-  font-weight: bold;
-  margin-top: 20px;
-  color: #004080;
-  border-top: 1px dashed #999;
-  padding-top: 10px;
-}
-.status-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.status-box {
-  background-color: #f0f4ff;
-  border: 1px solid #c2d3ff;
-  border-radius: 12px;
-  padding: 20px;
-  width: 320px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  direction: rtl;
-  font-family: 'Assistant', sans-serif;
-}
-
-.status-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #003366;
-  border-bottom: 1px solid #a0a0a0;
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  text-align: right;
-}
-
-.status-line {
-  font-size: 16px;
-  margin-bottom: 6px;
-  color: #222;
-  text-align: right;
-}
-
-.status-refused-title {
-  font-weight: bold;
-  color: #b00020;
-  margin-top: 14px;
-  text-align: right;
-}
-
-.status-refused-line {
-  font-size: 15px;
-  color: #b00020;
-  margin-bottom: 4px;
-  text-align: right;
-}
-
-.status-summary {
-  font-size: 16px;
-  font-weight: bold;
-  color: #004080;
-  border-top: 1px dashed #999;
-  margin-top: 16px;
-  padding-top: 10px;
-  text-align: right;
-}
-.summary-table {
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  padding: 20px;
-  width: fit-content;
-  margin: 0 auto 30px auto;
-  direction: rtl;
-  text-align: right;
-  font-family: 'Assistant', sans-serif;
-}
-
-.table-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #003366;
-  margin-bottom: 14px;
-  border-bottom: 2px solid #003366;
-  padding-bottom: 6px;
-}
-
-.org-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.org-table th {
-  background-color: #004080;
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-}
-
-.org-table td {
-  padding: 10px;
-  font-size: 16px;
-  border-bottom: 1px solid #ddd;
-}
-
-.org-table tfoot td {
-  background-color: #f0f0f0;
-  font-weight: bold;
-}
-
-
-
-
-
-
-.status-section {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.status-box {
-  background-color: #fff;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px 30px;
-  min-width: 280px;
-  max-width: 360px;
-  text-align: right;
-  font-family: 'Assistant', sans-serif;
-  position: relative;
-}
-
-.status-box h3 {
-  font-size: 18px;
-  font-weight: bold;
-  color: #003366;
-  border-bottom: 2px solid #003366;
-  padding-bottom: 8px;
-  margin-bottom: 15px;
-}
-
-.status-box p {
-  font-size: 16px;
-  margin: 4px 0;
-}
-
-.status-box .footer {
-  border-top: 1px solid #ccc;
-  padding-top: 8px;
-  margin-top: 12px;
-  font-weight: bold;
-  color: #444;
-}
-</style>
-                                        </head>
-                                        <body>
-
-                                          <header class="main-header">
-                                            <h1 class="page-title">סטטיסטיקות ונתונים</h1>
-                                            <img src="https://cdn.glitch.global/64a24585-7ccf-4cfb-bfc3-67e1b6c37fe4/logo.png?v=1745867431324" alt="לוגו" class="logo">
-                                          </header>
-                                        <form onsubmit="goToDate(event)" class="date-form">
-                                          <label for="datePicker">בחר תאריך להצגת סטטיסטיקה:</label>
-                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-                                          <div class="date-controls">
-                                            <input type="date" id="datePicker" name="date" value="<%= today || '' %>" required>
-                                            <button type="submit">טען</button>
-                                          </div>
-                                        </form>
-
-
-                                          <div class="container">
-                                        <form id="searchForm" style="max-width: 1400px; margin: 20px auto; padding: 0 30px;">
-                                          <div style="position: relative; display: flex; align-items: center;">
-                                            <!-- שדה חיפוש מעוצב -->
-                                            <input
-                                              type="text"
-                                              id="filterInput"
-                                              name="q"
-                                              value="<%= typeof query !== 'undefined' ? query : '' %>"
-                                              class="search-bar"
-                                              placeholder="🔍 חפש לפי טקסט חופשי בכל הטבלה..."
-                                              style="width: 100%; padding: 14px 50px 14px 20px; font-size: 16px; border-radius: 40px; border: 1px solid #ccc; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.08);"
-                                            >
-
-                                            <!-- כפתור לוח שנה מעוצב בפנים -->
-                                            <button
-                                              type="button"
-                                              id="toggleHistory"
-                                              title="חיפוש היסטורי"
-                                          onclick="toggleHistoryMode()"
-                                              style="position: absolute; left: 12px; background: none; border: none; color: #004080; font-size: 20px; cursor: pointer;"
-                                            >
-                                              <i class="fa-solid fa-calendar-days"></i>
-                                            </button>
-                                          </div>
-                                        </form>
-
-
-                                        <%
-                                          const orgStats = {};
-                                        const routeStats = {};
-                                        passedDrivers.forEach(driver => {
-                                          const isRefused = refusedCoordinations.some(coord =>
-                                            coord.coordinationNumber === driver.coordinationNumber &&
-                                            coord.donorOrg === driver.donorOrg
-                                          );
-                                          if (isRefused) return; // אל תכלול בפילוח
-
-                                          const org = driver.donorOrg || 'ללא ארגון';
-                                          orgStats[org] = (orgStats[org] || 0) + 1;
-
-                                          const route = driver.route || 'ללא נתיב';
-                                          routeStats[route] = (routeStats[route] || 0) + 1;
-                                        });
-
-
-                                          const refusedCount = (refusedCoordinations && refusedCoordinations.length) ? refusedCoordinations.length : 0;
-                                          const totalDrivers = passedDrivers.length - refusedCount;
-                                        %>
-
-
-
-<% if (routeSummary && Object.keys(routeSummary).length > 0) { %>
-  <div class="status-section">
-    <% ['ישראל', 'מצרים'].forEach(region => { %>
-      <% if (routeSummary[region]) { %>
-        <div class="status-box">
-          <h3>סטטוס - <%= region %><% if (region === 'מצרים') { %> 🇪🇬 <% } %></h3>
-          <% Object.entries(routeSummary[region]).forEach(([donor, count]) => { %>
-            <p><%= donor %> - <%= count %> משאיות</p>
-          <% }) %>
-          <p class="footer">סה"כ נכנסו <%= Object.values(routeSummary[region]).reduce((a,b)=>a+b,0) %> משאיות <%= region === 'מצרים' ? 'ממצרים' : 'מישראל' %></p>
-        </div>
-      <% } %>
-    <% }) %>
-  </div>
-<% } %>
-    </h3>
-          <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
-            <p class="status-line">📦 <%= routeName %> – <%= count.total %> משאיות</p>
-            <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
-              <p class="status-line">• <%= org %> – <%= orgCount %> משאיות</p>
-            <% }) %>
-          <% }) %>
-          <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
-            <p class="status-refused-title">משאיות מסורבות מ<%= region %>:</p>
-            <% routeSummary[region].refused.forEach((item, index) => { %>
-              <p class="status-refused-line"><%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %></p>
-            <% }) %>
-          <% } %>
-          <p class="status-summary">סה\"כ נכנסו <%= routeSummary[region].totalPassed %> משאיות מ<%= region %></p>
-        </div>
-      <% } %>
-    <% }) %>
-  </div>
-<% } %>
-
-<div class="summary-table">
-  <div class="table-title">
-    <i class="fa-solid fa-chart-column"></i> פילוח לפי ארגון תורם
-  </div>
-  <table class="org-table">
-    <thead>
-      <tr>
-        <th>ארגון</th>
-        <th>כמות</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% Object.entries(orgStats).forEach(([org, count]) => { %>
-        <tr>
-          <td><%= org %></td>
-          <td><%= count %></td>
-        </tr>
-      <% }) %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td><strong>סה\"כ</strong></td>
-        <td><strong><%= Object.values(orgStats).reduce((a,b)=>a+b,0) %></strong></td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
-
-                                        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px;">
-
-
-
-                                          <!-- כרטיס סירובים -->
-                                          <% if (refusedCoordinations && refusedCoordinations.length > 0) { %>
-                                        <div style="margin: 20px 0; background: #fff; padding: 14px; border-radius: 8px; border: 1px solid #ccc;">
-                                              <h4 style="margin: 0 0 8px 0; color: #b00020; text-align: right;">🚫 משאיות מסורבות</h4>
-                                              <ol style="margin: 0; padding-right: 20px; color: #000; text-align: right; direction: rtl;">
-                                                <% refusedCoordinations.forEach(item => { %>
-                                                  <li style="margin-bottom: 6px;">
-                                                    תיאום <strong><%= item.coordinationNumber %></strong> - ארגון <strong><%= item.donorOrg %></strong> - סיבה: <%= item.reason %>
-                                                  </li>
-                                                <% }); %>
-                                              </ol>
-                                            </div>
-                                          <% } %>
-                                        <!-- 🔍 כפתור אקסל מיושר למרכז + שורת חיפוש ברוחב מדויק של הטבלה -->
-                                        <div style="max-width: 1400px; margin: 0 auto 20px auto; padding: 0 30px;">
-                                          <!-- כפתור אקסל במרכז -->
-                                          <div style="text-align: center; margin-bottom: 15px;">
-                                            <a href="/export-csv" class="excel-button" download>
-                                              <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" alt="Excel Icon">
-                                              ייצוא לאקסל
-                                            </a>
-                                          </div>
-
-
-                                        <script>
-                                          function goToDate(event) {
-                                            event.preventDefault();
-                                            const date = document.getElementById('datePicker').value;
-                                            if (!date) return alert('יש לבחור תאריך');
-                                            window.location.href = `/statistics/${date}`;
-                                          }
-                                        </script>
-
-
-                                        <%
-                                          function isRejected(driver) {
-                                            return refusedCoordinations.some(coord =>
-                                              coord.coordinationNumber === driver.coordinationNumber &&
-                                              coord.donorOrg === driver.donorOrg
-                                            );
-                                          }
-                                        %>
-
-                                            <table class="drivers-table" id="statsTable">
-                                             <thead>
-                                          <tr>
-                                        <th onclick="sortTable(0, 'text')">שם נהג ⬍</th>
-                                        <th onclick="sortTable(1, 'number')">תעודת זהות ⬍</th>
-                                        <th onclick="sortTable(2, 'text')">טלפון ⬍</th>
-                                        <th onclick="sortTable(3, 'number')">מספר תיאום ⬍</th>
-                                        <th onclick="sortTable(4, 'text')">מספר משאית ⬍</th>
-                                        <th onclick="sortTable(5, 'text')">נתיב ⬍</th>
-                                        <th onclick="sortTable(6, 'text')">סוג סחורה ⬍</th>
-                                        <th onclick="sortTable(7, 'number')">מס' משטחים ⬍</th>
-                                        <th onclick="sortTable(8, 'text')">ארגון תורם ⬍</th>
-                                        <th onclick="sortTable(9, 'text')">שעה ⬍</th>
-                                        <th onclick="sortTable(10, 'text')">הוזן ביובל ⬍</th>
-                                        <th onclick="sortTable(11, 'text')">הודפס Gate Pass ⬍</th>
-                                        <th id="dateColumnHeader" style="display: none;">תאריך</th>
-
-                                          </tr>
-                                        </thead>
-                                              <tbody>
-                                                <% passedDrivers.forEach((driver, index) => { %>
-                                        <% if (isRejected(driver)) { %>
-                                          <tr style="background-color: #f8cccc;">
-                                        <% } else { %>
-                                          <tr>
-                                        <% } %>
-                                        <td style="text-align: right;">
-                                         <form action="/reject-driver-form" method="GET" style="margin: 0;">
-                                        <input type="hidden" name="idNumber" value="<%= driver.idNumber %>">
-                                          <input type="hidden" name="coordinationNumber" value="<%= driver.coordinationNumber %>">
-                                          <button type="submit"
-                                            style="background: none; border: none; color: #d32f2f !important; font-size: 22px; font-weight: bold; cursor: pointer;"
-                                            title="סמן סירוב">➖
-                                          </button>
-                                        </form>
-                                          <span style="margin-right: 10px;"><%= driver.name %></span>
-                                        </td>
-
-
-                                                    <td><%= driver.idNumber %></td>
-                                        <td style="white-space: nowrap; direction: ltr;"><%= driver.phone || driver.phoneNumber || '—' %></td>
-                                        <td><%= driver.coordinationNumber %></td>
-                                                      <td><%= driver.truckNumber || '—' %></td>
-                                                     <td><%= driver.route || '-' %></td>
-                                                    <td><%= driver.goodsType %></td>
-                                                    <td><%= driver.palletCount || '—' %></td>
-                                                    <td><%= driver.donorOrg || '' %></td>
-                                                    <td><%= driver.passedAt %></td>
-                                                  <td>
-                                         <input
-                                          type="checkbox"
-                                          data-id="<%= driver.idNumber %>"
-                                          data-coord="<%= driver.coordinationNumber %>"
-                                          <%= yuvalData && yuvalData[driver.idNumber + '-' + driver.coordinationNumber] ? 'checked' : '' %>
-                                          onchange="updateYuvalStatus(this)"
-                                        />
-
-                                        </td>
-
-                                            <td style="font-weight: bold;
-                                          <% if (driver.gatePassPrinted) { %>
-                                            color: #1d6f42;
-                                          <% } else { %>
-                                            color: crimson;
-                                          <% } %>
-                                        ">
-                                          <% if (driver.gatePassPrinted) { %>
-                                            ✔️
-                                          <% } else { %>
-                                            ❌
-                                          <% } %>
-                                        </td>
-                                                  </tr>
-                                                <% }); %>
-
-                                              </tbody>
-                                            </table>
-
-                                            <div style="text-align: center;">
-                                              <a href="/" class="statistics-button">⬅️ חזרה לרשימת הנהגים</a>
-                                            </div>
-                                          </div>
-                                        <script>
-                                          // פונקציה למיון טבלה
-                                          function sortTable(n, type = 'text') {
-                                            const table = document.getElementById("statsTable");
-                                            let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                                            switching = true;
-                                            dir = "asc";
-
-                                            while (switching) {
-                                              switching = false;
-                                              rows = table.rows;
-                                              for (i = 1; i < (rows.length - 1); i++) {
-                                                shouldSwitch = false;
-                                                x = rows[i].getElementsByTagName("TD")[n];
-                                                y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                                                let xVal = x.innerText.toLowerCase();
-                                                let yVal = y.innerText.toLowerCase();
-
-                                                if (type === 'number') {
-                                                  xVal = parseFloat(xVal.replace(/[^\d.-]/g, '')) || 0;
-                                                  yVal = parseFloat(yVal.replace(/[^\d.-]/g, '')) || 0;
-                                                }
-
-                                                if ((dir === "asc" && xVal > yVal) || (dir === "desc" && xVal < yVal)) {
-                                                  shouldSwitch = true;
-                                                  break;
-                                                }
-                                              }
-                                              if (shouldSwitch) {
-                                                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                                                switching = true;
-                                                switchcount++;
-                                              } else if (switchcount === 0 && dir === "asc") {
-                                                dir = "desc";
-                                                switching = true;
-                                              }
-                                            }
-                                          }
-                                        </script>
-                                          <script>
-                                          document.addEventListener('DOMContentLoaded', function () {
-                                            let searchInHistory = false;
-
-                                            const toggleBtn = document.getElementById('toggleHistory');
-                                            const searchForm = document.getElementById('searchForm');
-                                            const filterInput = document.getElementById('filterInput');
-                                            const dateColumn = document.getElementById('dateColumnHeader');
-
-                                            // ⬅️ לחיצה על אייקון לוח שנה
-                                            toggleBtn.addEventListener('click', () => {
-                                              searchInHistory = !searchInHistory;
-
-                                              // עיצוב האייקון
-                                              if (searchInHistory) {
-                                                toggleBtn.style.backgroundColor = '#004080';
-                                                toggleBtn.style.color = 'white';
-                                                toggleBtn.title = "חיפוש היסטורי פעיל";
-                                                dateColumn.style.display = 'table-cell';
-                                              } else {
-                                                toggleBtn.style.backgroundColor = 'white';
-                                                toggleBtn.style.color = '#004080';
-                                                toggleBtn.title = "חיפוש סטטיסטיקות של היום בלבד";
-                                                dateColumn.style.display = 'none';
-                                              }
-
-                                              toggleBtn.innerHTML = `<i class="fa-solid fa-calendar-days"></i>`;
-                                            });
-
-                                            // ⬅️ שליחת טופס החיפוש
-                                            searchForm.addEventListener('submit', function (e) {
-                                              e.preventDefault();
-                                              const query = filterInput.value.trim();
-                                              if (!query) {
-                                                alert('יש להזין טקסט לחיפוש');
-                                                return;
-                                              }
-
-                                              if (searchInHistory) {
-                                                fetch('/search-statistics?query=' + encodeURIComponent(query))
-                                                  .then(res => res.json())
-                                                  .then(data => {
-                                                    const tbody = document.querySelector("#statsTable tbody");
-                                                    tbody.innerHTML = '';
-                                                    dateColumn.style.display = 'table-cell';
-
-                                                    if (!Array.isArray(data) || data.length === 0) {
-                                                      alert('לא נמצאו תוצאות בהיסטוריה');
-                                                      return;
-                                                    }
-
-                                                    data.forEach(driver => {
-                                                      const row = document.createElement('tr');
-                                                      row.innerHTML = `
-                                                        <td>${driver.name || '—'}</td>
-                                                        <td>${driver.idNumber || '—'}</td>
-                                                        <td style="white-space: nowrap; direction: ltr;">${driver.phone || driver.phoneNumber || '—'}</td>
-                                                        <td>${driver.coordinationNumber || '—'}</td>
-                                                        <td>${driver.truckNumber || '—'}</td>
-                                                        <td>${driver.route || '—'}</td>
-                                                        <td>${driver.goodsType || '—'}</td>
-                                                        <td>${driver.palletCount || '—'}</td>
-                                                        <td>${driver.donorOrg || '—'}</td>
-                                                        <td>${driver.passedAt || '—'}</td>
-                                                        <td>—</td>
-                                                        <td>${driver.gatePassPrinted ? '✔️' : '❌'}</td>
-                                                        <td>${driver.date || '—'}</td>
-                                                      `;
-                                                      tbody.appendChild(row);
-                                                    });
-
-                                                    alert(`נמצאו ${data.length} תוצאות תואמות בתיאומי עבר`);
-                                                  })
-                                                  .catch(err => {
-                                                    console.error(err);
-                                                    alert('שגיאה בעת החיפוש');
-                                                  });
-                                              } else {
-                                                // 🔍 חיפוש מתוך סטטיסטיקה חיה (drivers.json)
-                                                window.location.href = `/statistics?q=${encodeURIComponent(query)}`;
-                                              }
-                                            });
-                                          });
-                                        </script>
-                                        <script>
-                                        function updateYuvalStatus(checkbox) {
-                                          const id = checkbox.dataset.id;
-                                          const coordination = checkbox.dataset.coord;
-                                          const key = `${id}-${coordination}`;
-                                          const value = checkbox.checked;
-
-                                          fetch(`/update-yuval/${key}`, {
-                                            method: 'POST',
-                                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                                            body: new URLSearchParams({ yuval: value ? 'on' : '' })
-                                          }).then(res => {
-                                            if (!res.ok) {
-                                              alert('שגיאה בשמירה');
-                                              checkbox.checked = !value;
-                                            }
-                                          }).catch(() => {
-                                            alert('שגיאה בחיבור לשרת');
-                                            checkbox.checked = !value;
-                                          });
-                                        }
-                                        </script>
-
-
-                                        </body>
-                                        </html>
+                                                                                          <!DOCTYPE html>
+                                                                                          <html lang="he" dir="rtl">
+                                                                                          <head>
+                                                                                            <meta charset="UTF-8">
+                                                                                            <title>דו"ח מעבר בקרה</title>
+                                                                                            <link rel="stylesheet" href="/style.css">
+                                                                                            <style>
+                                                                                              body {
+                                                                                                font-family: 'Assistant', sans-serif;
+                                                                                                background-color: #f3f6fa;
+                                                                                                margin: 0;
+                                                                                                padding: 0;
+                                                                                              }
+                                                                                              header.main-header {
+                                                                                                background-color: #004080;
+                                                                                                color: white;
+                                                                                                padding: 20px 40px;
+                                                                                                display: flex;
+                                                                                                align-items: center;
+                                                                                                justify-content: center;
+                                                                                                position: relative;
+                                                                                              }
+                                                                                              .page-title {
+                                                                                            font-size: 35px;
+                                                                                            color: white;
+                                                                                            margin: 0 auto;
+                                                                                            font-weight: bold;
+                                                                                          }
+
+                                                                                              }
+                                                                                              .logo {
+                                                                                            height: 80px;
+                                                                                            position: absolute;
+                                                                                            right: 20px;
+                                                                                          }
+
+                                                                                             .container {
+                                                                                            max-width: 1400px;
+                                                                                            margin: 40px auto;
+                                                                                            padding: 0 30px;
+                                                                                          }
+
+                                                                                              .search-bar {
+                                                                                                width: 100%;
+                                                                                                padding: 12px 16px;
+                                                                                                font-size: 16px;
+                                                                                                border-radius: 8px;
+                                                                                                border: 1px solid #ccc;
+                                                                                                margin: 20px 0;
+                                                                                              }
+                                                                                              .excel-button {
+                                                                                                background-color: #1d6f42;
+                                                                                                color: white;
+                                                                                                padding: 10px 20px;
+                                                                                                font-weight: bold;
+                                                                                                border: none;
+                                                                                                border-radius: 8px;
+                                                                                                cursor: pointer;
+                                                                                                text-decoration: none;
+                                                                                                display: inline-block;
+                                                                                              }
+                                                                                              .excel-button:hover {
+                                                                                                background-color: #145c35;
+                                                                                              }
+                                                                                              .excel-button img {
+                                                                                                vertical-align: middle;
+                                                                                                margin-left: 8px;
+                                                                                                width: 20px;
+                                                                                              }
+                                                                                              table.drivers-table {
+                                                                                                width: 100%;
+                                                                                                border-collapse: collapse;
+                                                                                                background: white;
+                                                                                                border-radius: 8px;
+                                                                                                overflow: hidden;
+                                                                                                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                                                                                              }
+                                                                                            table.drivers-table th {
+                                                                                            background-color: #004080;
+                                                                                            color: white;
+                                                                                            font-weight: bold;
+                                                                                            font-size: 16px;
+                                                                                            cursor: pointer;
+                                                                                            padding: 16px;
+                                                                                          }
+
+                                                                                            table.drivers-table td {
+                                                                                            color: #222;
+                                                                                            font-size: 17px;
+                                                                                            padding: 20px 18px;
+                                                                                            border-bottom: 1px solid #ddd;
+                                                                                            text-align: center;
+                                                                                          }
+
+                                                                                              table.drivers-table tbody tr:hover {
+                                                                                                background-color: #f0f4ff;
+                                                                                              }
+                                                                                              .statistics-button {
+                                                                                                display: inline-block;
+                                                                                                margin-top: 30px;
+                                                                                                font-weight: bold;
+                                                                                                background-color: #004080;
+                                                                                                color: white;
+                                                                                                padding: 10px 20px;
+                                                                                                border-radius: 8px;
+                                                                                                text-decoration: none;
+                                                                                              }
+
+                                                                                              .date-form {
+                                                                                            background-color: #ffffff;
+                                                                                            border: 1px solid #cfdfff;
+                                                                                            padding: 20px;
+                                                                                            border-radius: 12px;
+                                                                                            max-width: 420px;
+                                                                                            margin: 20px auto;
+                                                                                            font-family: 'Assistant', sans-serif;
+                                                                                            direction: rtl;
+                                                                                            text-align: right;
+                                                                                            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                                                                                          }
+
+                                                                                          .date-form label {
+                                                                                            display: block;
+                                                                                            font-weight: bold;
+                                                                                            margin-bottom: 10px;
+                                                                                            font-size: 16px;
+                                                                                            color: #004080;
+                                                                                          }
+
+                                                                                          .date-controls {
+                                                                                            display: flex;
+                                                                                            gap: 10px;
+                                                                                            align-items: center;
+                                                                                          }
+
+                                                                                          .date-controls input[type="date"] {
+                                                                                            padding: 8px 10px;
+                                                                                            font-size: 15px;
+                                                                                            border-radius: 8px;
+                                                                                            border: 1px solid #999;
+                                                                                            flex-grow: 1;
+                                                                                          }
+
+                                                                                          .date-controls button {
+                                                                                            background-color: #004080;
+                                                                                            color: white;
+                                                                                            border: none;
+                                                                                            padding: 8px 16px;
+                                                                                            border-radius: 8px;
+                                                                                            font-weight: bold;
+                                                                                            cursor: pointer;
+                                                                                            transition: background-color 0.3s ease;
+                                                                                          }
+
+                                                                                          .date-controls button:hover {
+                                                                                            background-color: #002c5f;
+                                                                                          }
+
+                                                  .status-container {
+                                                    display: flex;
+                                                    flex-wrap: wrap;
+                                                    gap: 30px;
+                                                    margin: 30px 0;
+                                                    justify-content: center;
+                                                  }
+
+                                                  .status-box {
+                                                    background: linear-gradient(to bottom, #eaf3ff, #ffffff);
+                                                    border: 1px solid #a0c4ff;
+                                                    border-radius: 16px;
+                                                    padding: 24px;
+                                                    min-width: 300px;
+                                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+                                                    direction: rtl;
+                                                    text-align: right;
+                                                    transition: 0.3s ease;
+                                                  }
+
+                                                  .status-box:hover {
+                                                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+                                                  }
+
+                                                  .status-title {
+                                                    font-weight: bold;
+                                                    font-size: 22px;
+                                                    color: #003366;
+                                                    margin-bottom: 18px;
+                                                    border-bottom: 2px solid #004080;
+                                                    padding-bottom: 6px;
+                                                  }
+
+                                                  .status-item {
+                                                    font-size: 17px;
+                                                    margin-bottom: 8px;
+                                                    color: #333;
+                                                    line-height: 1.7;
+                                                  }
+
+                                                  .status-sub {
+                                                    font-size: 15px;
+                                                    color: #d32f2f;
+                                                    margin-top: 16px;
+                                                    font-weight: bold;
+                                                  }
+
+                                                  .status-summary {
+                                                    font-size: 17px;
+                                                    font-weight: bold;
+                                                    margin-top: 20px;
+                                                    color: #004080;
+                                                    border-top: 1px dashed #999;
+                                                    padding-top: 10px;
+                                                  }
+                                                  .status-container {
+                                                    display: flex;
+                                                    flex-wrap: wrap;
+                                                    gap: 30px;
+                                                    justify-content: center;
+                                                    margin-bottom: 30px;
+                                                  }
+
+                                                  .status-box {
+                                                    background-color: #f0f4ff;
+                                                    border: 1px solid #c2d3ff;
+                                                    border-radius: 12px;
+                                                    padding: 20px;
+                                                    width: 320px;
+                                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                                                    direction: rtl;
+                                                    font-family: 'Assistant', sans-serif;
+                                                  }
+
+                                                  .status-title {
+                                                    font-size: 20px;
+                                                    font-weight: bold;
+                                                    color: #003366;
+                                                    border-bottom: 1px solid #a0a0a0;
+                                                    margin-bottom: 12px;
+                                                    padding-bottom: 6px;
+                                                    text-align: right;
+                                                  }
+
+                                                  .status-line {
+                                                    font-size: 16px;
+                                                    margin-bottom: 6px;
+                                                    color: #222;
+                                                    text-align: right;
+                                                  }
+
+                                                  .status-refused-title {
+                                                    font-weight: bold;
+                                                    color: #b00020;
+                                                    margin-top: 14px;
+                                                    text-align: right;
+                                                  }
+
+                                                  .status-refused-line {
+                                                    font-size: 15px;
+                                                    color: #b00020;
+                                                    margin-bottom: 4px;
+                                                    text-align: right;
+                                                  }
+
+                                                  .status-summary {
+                                                    font-size: 16px;
+                                                    font-weight: bold;
+                                                    color: #004080;
+                                                    border-top: 1px dashed #999;
+                                                    margin-top: 16px;
+                                                    padding-top: 10px;
+                                                    text-align: right;
+                                                  }
+                                                  .summary-table {
+                                                    background: white;
+                                                    border-radius: 14px;
+                                                    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+                                                    padding: 20px;
+                                                    width: fit-content;
+                                                    margin: 0 auto 30px auto;
+                                                    direction: rtl;
+                                                    text-align: right;
+                                                    font-family: 'Assistant', sans-serif;
+                                                  }
+
+                                                  .table-title {
+                                                    font-size: 18px;
+                                                    font-weight: bold;
+                                                    color: #003366;
+                                                    margin-bottom: 14px;
+                                                    border-bottom: 2px solid #003366;
+                                                    padding-bottom: 6px;
+                                                  }
+
+                                                  .org-table {
+                                                    width: 100%;
+                                                    border-collapse: collapse;
+                                                  }
+
+                                                  .org-table th {
+                                                    background-color: #004080;
+                                                    color: white;
+                                                    font-weight: bold;
+                                                    padding: 10px;
+                                                  }
+
+                                                  .org-table td {
+                                                    padding: 10px;
+                                                    font-size: 16px;
+                                                    border-bottom: 1px solid #ddd;
+                                                  }
+
+                                                  .org-table tfoot td {
+                                                    background-color: #f0f0f0;
+                                                    font-weight: bold;
+                                                  }
+
+
+
+
+
+
+                                                  .status-section {
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    gap: 30px;
+                                                    margin-bottom: 30px;
+                                                    flex-wrap: wrap;
+                                                  }
+
+                                                  .status-box {
+                                                    background-color: #fff;
+                                                    border-radius: 14px;
+                                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                                                    padding: 20px 30px;
+                                                    min-width: 280px;
+                                                    max-width: 360px;
+                                                    text-align: right;
+                                                    font-family: 'Assistant', sans-serif;
+                                                    position: relative;
+                                                  }
+
+                                                  .status-box h3 {
+                                                    font-size: 18px;
+                                                    font-weight: bold;
+                                                    color: #003366;
+                                                    border-bottom: 2px solid #003366;
+                                                    padding-bottom: 8px;
+                                                    margin-bottom: 15px;
+                                                  }
+
+                                                  .status-box p {
+                                                    font-size: 16px;
+                                                    margin: 4px 0;
+                                                  }
+
+                                                  .status-box .footer {
+                                                    border-top: 1px solid #ccc;
+                                                    padding-top: 8px;
+                                                    margin-top: 12px;
+                                                    font-weight: bold;
+                                                    color: #444;
+                                                  }
+                                                  </style>
+                                                                                          </head>
+                                                                                          <body>
+
+                                                                                            <header class="main-header">
+                                                                                              <h1 class="page-title">סטטיסטיקות ונתונים</h1>
+                                                                                              <img src="https://cdn.glitch.global/64a24585-7ccf-4cfb-bfc3-67e1b6c37fe4/logo.png?v=1745867431324" alt="לוגו" class="logo">
+                                                                                            </header>
+                                                                                          <form onsubmit="goToDate(event)" class="date-form">
+                                                                                            <label for="datePicker">בחר תאריך להצגת סטטיסטיקה:</label>
+                                                                                          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+                                                                                            <div class="date-controls">
+                                                                                              <input type="date" id="datePicker" name="date" value="<%= today || '' %>" required>
+                                                                                              <button type="submit">טען</button>
+                                                                                            </div>
+                                                                                          </form>
+
+
+                                                                                            <div class="container">
+                                                                                          <form id="searchForm" style="max-width: 1400px; margin: 20px auto; padding: 0 30px;">
+                                                                                            <div style="position: relative; display: flex; align-items: center;">
+                                                                                              <!-- שדה חיפוש מעוצב -->
+                                                                                              <input
+                                                                                                type="text"
+                                                                                                id="filterInput"
+                                                                                                name="q"
+                                                                                                value="<%= typeof query !== 'undefined' ? query : '' %>"
+                                                                                                class="search-bar"
+                                                                                                placeholder="🔍 חפש לפי טקסט חופשי בכל הטבלה..."
+                                                                                                style="width: 100%; padding: 14px 50px 14px 20px; font-size: 16px; border-radius: 40px; border: 1px solid #ccc; background-color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.08);"
+                                                                                              >
+
+                                                                                              <!-- כפתור לוח שנה מעוצב בפנים -->
+                                                                                              <button
+                                                                                                type="button"
+                                                                                                id="toggleHistory"
+                                                                                                title="חיפוש היסטורי"
+                                                                                            onclick="toggleHistoryMode()"
+                                                                                                style="position: absolute; left: 12px; background: none; border: none; color: #004080; font-size: 20px; cursor: pointer;"
+                                                                                              >
+                                                                                                <i class="fa-solid fa-calendar-days"></i>
+                                                                                              </button>
+                                                                                            </div>
+                                                                                          </form>
+
+
+                                                                                          <%
+                                                                                            const orgStats = {};
+                                                                                          const routeStats = {};
+                                                                                          passedDrivers.forEach(driver => {
+                                                                                            const isRefused = refusedCoordinations.some(coord =>
+                                                                                              coord.coordinationNumber === driver.coordinationNumber &&
+                                                                                              coord.donorOrg === driver.donorOrg
+                                                                                            );
+                                                                                            if (isRefused) return; // אל תכלול בפילוח
+
+                                                                                            const org = driver.donorOrg || 'ללא ארגון';
+                                                                                            orgStats[org] = (orgStats[org] || 0) + 1;
+
+                                                                                            const route = driver.route || 'ללא נתיב';
+                                                                                            routeStats[route] = (routeStats[route] || 0) + 1;
+                                                                                          });
+
+
+                                                                                            const refusedCount = (refusedCoordinations && refusedCoordinations.length) ? refusedCoordinations.length : 0;
+                                                                                            const totalDrivers = passedDrivers.length - refusedCount;
+                                                                                          %>
+
+
+
+                                                  <% if (routeSummary && Object.keys(routeSummary).length > 0) { %>
+                                                    <div class="status-section">
+                                                      <% ['ישראל', 'מצרים'].forEach(region => { %>
+                                                        <% if (routeSummary[region]) { %>
+                                                          <div class="status-box">
+                                                            <h3>סטטוס - <%= region %><% if (region === 'מצרים') { %> 🇪🇬 <% } %></h3>
+                                                            <% Object.entries(routeSummary[region]).forEach(([donor, count]) => { %>
+                                                              <p><%= donor %> - <%= count %> משאיות</p>
+                                                            <% }) %>
+                                                            <p class="footer">סה"כ נכנסו <%= Object.values(routeSummary[region]).reduce((a,b)=>a+b,0) %> משאיות <%= region === 'מצרים' ? 'ממצרים' : 'מישראל' %></p>
+                                                          </div>
+                                                        <% } %>
+                                                      <% }) %>
+                                                    </div>
+                                                  <% } %>
+                                                      </h3>
+                                                            <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
+                                                              <p class="status-line">📦 <%= routeName %> – <%= count.total %> משאיות</p>
+                                                              <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
+                                                                <p class="status-line">• <%= org %> – <%= orgCount %> משאיות</p>
+                                                              <% }) %>
+                                                            <% }) %>
+                                                            <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
+                                                              <p class="status-refused-title">משאיות מסורבות מ<%= region %>:</p>
+                                                              <% routeSummary[region].refused.forEach((item, index) => { %>
+                                                                <p class="status-refused-line"><%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %></p>
+                                                              <% }) %>
+                                                            <% } %>
+                                                            <p class="status-summary">סה\"כ נכנסו <%= routeSummary[region].totalPassed %> משאיות מ<%= region %></p>
+                                                          </div>
+                                                        <% } %>
+                                                      <% }) %>
+                                                    </div>
+                                                  <% } %>
+
+                                                  <div class="summary-table">
+                                                    <div class="table-title">
+                                                      <i class="fa-solid fa-chart-column"></i> פילוח לפי ארגון תורם
+                                                    </div>
+                                                    <table class="org-table">
+                                                      <thead>
+                                                        <tr>
+                                                          <th>ארגון</th>
+                                                          <th>כמות</th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <% Object.entries(orgStats).forEach(([org, count]) => { %>
+                                                          <tr>
+                                                            <td><%= org %></td>
+                                                            <td><%= count %></td>
+                                                          </tr>
+                                                        <% }) %>
+                                                      </tbody>
+                                                      <tfoot>
+                                                        <tr>
+                                                          <td><strong>סה\"כ</strong></td>
+                                                          <td><strong><%= Object.values(orgStats).reduce((a,b)=>a+b,0) %></strong></td>
+                                                        </tr>
+                                                      </tfoot>
+                                                    </table>
+                                                  </div>
+
+                                                                                          <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px;">
+
+
+
+                                                                                            <!-- כרטיס סירובים -->
+                                                                                            <% if (refusedCoordinations && refusedCoordinations.length > 0) { %>
+                                                                                          <div style="margin: 20px 0; background: #fff; padding: 14px; border-radius: 8px; border: 1px solid #ccc;">
+                                                                                                <h4 style="margin: 0 0 8px 0; color: #b00020; text-align: right;">🚫 משאיות מסורבות</h4>
+                                                                                                <ol style="margin: 0; padding-right: 20px; color: #000; text-align: right; direction: rtl;">
+                                                                                                  <% refusedCoordinations.forEach(item => { %>
+                                                                                                    <li style="margin-bottom: 6px;">
+                                                                                                      תיאום <strong><%= item.coordinationNumber %></strong> - ארגון <strong><%= item.donorOrg %></strong> - סיבה: <%= item.reason %>
+                                                                                                    </li>
+                                                                                                  <% }); %>
+                                                                                                </ol>
+                                                                                              </div>
+                                                                                            <% } %>
+                                                                                          <!-- 🔍 כפתור אקסל מיושר למרכז + שורת חיפוש ברוחב מדויק של הטבלה -->
+                                                                                          <div style="max-width: 1400px; margin: 0 auto 20px auto; padding: 0 30px;">
+                                                                                            <!-- כפתור אקסל במרכז -->
+                                                                                            <div style="text-align: center; margin-bottom: 15px;">
+                                                                                              <a href="/export-csv" class="excel-button" download>
+                                                                                                <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" alt="Excel Icon">
+                                                                                                ייצוא לאקסל
+                                                                                              </a>
+                                                                                            </div>
+
+
+                                                                                          <script>
+                                                                                            function goToDate(event) {
+                                                                                              event.preventDefault();
+                                                                                              const date = document.getElementById('datePicker').value;
+                                                                                              if (!date) return alert('יש לבחור תאריך');
+                                                                                              window.location.href = `/statistics/${date}`;
+                                                                                            }
+                                                                                          </script>
+
+
+                                                                                          <%
+                                                                                            function isRejected(driver) {
+                                                                                              return refusedCoordinations.some(coord =>
+                                                                                                coord.coordinationNumber === driver.coordinationNumber &&
+                                                                                                coord.donorOrg === driver.donorOrg
+                                                                                              );
+                                                                                            }
+                                                                                          %>
+
+                                                                                              <table class="drivers-table" id="statsTable">
+                                                                                               <thead>
+                                                                                            <tr>
+                                                                                          <th onclick="sortTable(0, 'text')">שם נהג ⬍</th>
+                                                                                          <th onclick="sortTable(1, 'number')">תעודת זהות ⬍</th>
+                                                                                          <th onclick="sortTable(2, 'text')">טלפון ⬍</th>
+                                                                                          <th onclick="sortTable(3, 'number')">מספר תיאום ⬍</th>
+                                                                                          <th onclick="sortTable(4, 'text')">מספר משאית ⬍</th>
+                                                                                          <th onclick="sortTable(5, 'text')">נתיב ⬍</th>
+                                                                                          <th onclick="sortTable(6, 'text')">סוג סחורה ⬍</th>
+                                                                                          <th onclick="sortTable(7, 'number')">מס' משטחים ⬍</th>
+                                                                                          <th onclick="sortTable(8, 'text')">ארגון תורם ⬍</th>
+                                                                                          <th onclick="sortTable(9, 'text')">שעה ⬍</th>
+                                                                                          <th onclick="sortTable(10, 'text')">הוזן ביובל ⬍</th>
+                                                                                          <th onclick="sortTable(11, 'text')">הודפס Gate Pass ⬍</th>
+                                                                                          <th id="dateColumnHeader" style="display: none;">תאריך</th>
+
+                                                                                            </tr>
+                                                                                          </thead>
+                                                                                                <tbody>
+                                                                                                  <% passedDrivers.forEach((driver, index) => { %>
+                                                                                          <% if (isRejected(driver)) { %>
+                                                                                            <tr style="background-color: #f8cccc;">
+                                                                                          <% } else { %>
+                                                                                            <tr>
+                                                                                          <% } %>
+                                                                                          <td style="text-align: right;">
+                                                                                           <form action="/reject-driver-form" method="GET" style="margin: 0;">
+                                                                                          <input type="hidden" name="idNumber" value="<%= driver.idNumber %>">
+                                                                                            <input type="hidden" name="coordinationNumber" value="<%= driver.coordinationNumber %>">
+                                                                                            <button type="submit"
+                                                                                              style="background: none; border: none; color: #d32f2f !important; font-size: 22px; font-weight: bold; cursor: pointer;"
+                                                                                              title="סמן סירוב">➖
+                                                                                            </button>
+                                                                                          </form>
+                                                                                            <span style="margin-right: 10px;"><%= driver.name %></span>
+                                                                                          </td>
+
+
+                                                                                                      <td><%= driver.idNumber %></td>
+                                                                                          <td style="white-space: nowrap; direction: ltr;"><%= driver.phone || driver.phoneNumber || '—' %></td>
+                                                                                          <td><%= driver.coordinationNumber %></td>
+                                                                                                        <td><%= driver.truckNumber || '—' %></td>
+                                                                                                       <td><%= driver.route || '-' %></td>
+                                                                                                      <td><%= driver.goodsType %></td>
+                                                                                                      <td><%= driver.palletCount || '—' %></td>
+                                                                                                      <td><%= driver.donorOrg || '' %></td>
+                                                                                                      <td><%= driver.passedAt %></td>
+                                                                                                    <td>
+                                                                                           <input
+                                                                                            type="checkbox"
+                                                                                            data-id="<%= driver.idNumber %>"
+                                                                                            data-coord="<%= driver.coordinationNumber %>"
+                                                                                            <%= yuvalData && yuvalData[driver.idNumber + '-' + driver.coordinationNumber] ? 'checked' : '' %>
+                                                                                            onchange="updateYuvalStatus(this)"
+                                                                                          />
+
+                                                                                          </td>
+
+                                                                                              <td style="font-weight: bold;
+                                                                                            <% if (driver.gatePassPrinted) { %>
+                                                                                              color: #1d6f42;
+                                                                                            <% } else { %>
+                                                                                              color: crimson;
+                                                                                            <% } %>
+                                                                                          ">
+                                                                                            <% if (driver.gatePassPrinted) { %>
+                                                                                              ✔️
+                                                                                            <% } else { %>
+                                                                                              ❌
+                                                                                            <% } %>
+                                                                                          </td>
+                                                                                                    </tr>
+                                                                                                  <% }); %>
+
+                                                                                                </tbody>
+                                                                                              </table>
+
+                                                                                              <div style="text-align: center;">
+                                                                                                <a href="/" class="statistics-button">⬅️ חזרה לרשימת הנהגים</a>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          <script>
+                                                                                            // פונקציה למיון טבלה
+                                                                                            function sortTable(n, type = 'text') {
+                                                                                              const table = document.getElementById("statsTable");
+                                                                                              let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                                                                                              switching = true;
+                                                                                              dir = "asc";
+
+                                                                                              while (switching) {
+                                                                                                switching = false;
+                                                                                                rows = table.rows;
+                                                                                                for (i = 1; i < (rows.length - 1); i++) {
+                                                                                                  shouldSwitch = false;
+                                                                                                  x = rows[i].getElementsByTagName("TD")[n];
+                                                                                                  y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                                                                                                  let xVal = x.innerText.toLowerCase();
+                                                                                                  let yVal = y.innerText.toLowerCase();
+
+                                                                                                  if (type === 'number') {
+                                                                                                    xVal = parseFloat(xVal.replace(/[^\d.-]/g, '')) || 0;
+                                                                                                    yVal = parseFloat(yVal.replace(/[^\d.-]/g, '')) || 0;
+                                                                                                  }
+
+                                                                                                  if ((dir === "asc" && xVal > yVal) || (dir === "desc" && xVal < yVal)) {
+                                                                                                    shouldSwitch = true;
+                                                                                                    break;
+                                                                                                  }
+                                                                                                }
+                                                                                                if (shouldSwitch) {
+                                                                                                  rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                                                                                                  switching = true;
+                                                                                                  switchcount++;
+                                                                                                } else if (switchcount === 0 && dir === "asc") {
+                                                                                                  dir = "desc";
+                                                                                                  switching = true;
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                          </script>
+                                                                                            <script>
+                                                                                            document.addEventListener('DOMContentLoaded', function () {
+                                                                                              let searchInHistory = false;
+
+                                                                                              const toggleBtn = document.getElementById('toggleHistory');
+                                                                                              const searchForm = document.getElementById('searchForm');
+                                                                                              const filterInput = document.getElementById('filterInput');
+                                                                                              const dateColumn = document.getElementById('dateColumnHeader');
+
+                                                                                              // ⬅️ לחיצה על אייקון לוח שנה
+                                                                                              toggleBtn.addEventListener('click', () => {
+                                                                                                searchInHistory = !searchInHistory;
+
+                                                                                                // עיצוב האייקון
+                                                                                                if (searchInHistory) {
+                                                                                                  toggleBtn.style.backgroundColor = '#004080';
+                                                                                                  toggleBtn.style.color = 'white';
+                                                                                                  toggleBtn.title = "חיפוש היסטורי פעיל";
+                                                                                                  dateColumn.style.display = 'table-cell';
+                                                                                                } else {
+                                                                                                  toggleBtn.style.backgroundColor = 'white';
+                                                                                                  toggleBtn.style.color = '#004080';
+                                                                                                  toggleBtn.title = "חיפוש סטטיסטיקות של היום בלבד";
+                                                                                                  dateColumn.style.display = 'none';
+                                                                                                }
+
+                                                                                                toggleBtn.innerHTML = `<i class="fa-solid fa-calendar-days"></i>`;
+                                                                                              });
+
+                                                                                              // ⬅️ שליחת טופס החיפוש
+                                                                                              searchForm.addEventListener('submit', function (e) {
+                                                                                                e.preventDefault();
+                                                                                                const query = filterInput.value.trim();
+                                                                                                if (!query) {
+                                                                                                  alert('יש להזין טקסט לחיפוש');
+                                                                                                  return;
+                                                                                                }
+
+                                                                                                if (searchInHistory) {
+                                                                                                  fetch('/search-statistics?query=' + encodeURIComponent(query))
+                                                                                                    .then(res => res.json())
+                                                                                                    .then(data => {
+                                                                                                      const tbody = document.querySelector("#statsTable tbody");
+                                                                                                      tbody.innerHTML = '';
+                                                                                                      dateColumn.style.display = 'table-cell';
+
+                                                                                                      if (!Array.isArray(data) || data.length === 0) {
+                                                                                                        alert('לא נמצאו תוצאות בהיסטוריה');
+                                                                                                        return;
+                                                                                                      }
+
+                                                                                                      data.forEach(driver => {
+                                                                                                        const row = document.createElement('tr');
+                                                                                                        row.innerHTML = `
+                                                                                                          <td>${driver.name || '—'}</td>
+                                                                                                          <td>${driver.idNumber || '—'}</td>
+                                                                                                          <td style="white-space: nowrap; direction: ltr;">${driver.phone || driver.phoneNumber || '—'}</td>
+                                                                                                          <td>${driver.coordinationNumber || '—'}</td>
+                                                                                                          <td>${driver.truckNumber || '—'}</td>
+                                                                                                          <td>${driver.route || '—'}</td>
+                                                                                                          <td>${driver.goodsType || '—'}</td>
+                                                                                                          <td>${driver.palletCount || '—'}</td>
+                                                                                                          <td>${driver.donorOrg || '—'}</td>
+                                                                                                          <td>${driver.passedAt || '—'}</td>
+                                                                                                          <td>—</td>
+                                                                                                          <td>${driver.gatePassPrinted ? '✔️' : '❌'}</td>
+                                                                                                          <td>${driver.date || '—'}</td>
+                                                                                                        `;
+                                                                                                        tbody.appendChild(row);
+                                                                                                      });
+
+                                                                                                      alert(`נמצאו ${data.length} תוצאות תואמות בתיאומי עבר`);
+                                                                                                    })
+                                                                                                    .catch(err => {
+                                                                                                      console.error(err);
+                                                                                                      alert('שגיאה בעת החיפוש');
+                                                                                                    });
+                                                                                                } else {
+                                                                                                  // 🔍 חיפוש מתוך סטטיסטיקה חיה (drivers.json)
+                                                                                                  window.location.href = `/statistics?q=${encodeURIComponent(query)}`;
+                                                                                                }
+                                                                                              });
+                                                                                            });
+                                                                                          </script>
+                                                                                          <script>
+                                                                                          function updateYuvalStatus(checkbox) {
+                                                                                            const id = checkbox.dataset.id;
+                                                                                            const coordination = checkbox.dataset.coord;
+                                                                                            const key = `${id}-${coordination}`;
+                                                                                            const value = checkbox.checked;
+
+                                                                                            fetch(`/update-yuval/${key}`, {
+                                                                                              method: 'POST',
+                                                                                              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                                                                              body: new URLSearchParams({ yuval: value ? 'on' : '' })
+                                                                                            }).then(res => {
+                                                                                              if (!res.ok) {
+                                                                                                alert('שגיאה בשמירה');
+                                                                                                checkbox.checked = !value;
+                                                                                              }
+                                                                                            }).catch(() => {
+                                                                                              alert('שגיאה בחיבור לשרת');
+                                                                                              checkbox.checked = !value;
+                                                                                            });
+                                                                                          }
+                                                                                          </script>
+
+
+                                                                                          </body>
+                                                                                          </html>

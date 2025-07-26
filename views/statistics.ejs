@@ -437,13 +437,31 @@
       <% if (routeSummary[region]) { %>
         <div class="status-box">
           <h3>סטטוס - <%= region %><% if (region === 'מצרים') { %> 🇪🇬 <% } %></h3>
-          <% Object.entries(routeSummary[region]).forEach(([donor, count]) => { %>
-            <p><%= donor %> - <%= count %> משאיות</p>
-          <% }) %>
-          <p class="footer">סה"כ נכנסו <%= Object.values(routeSummary[region]).reduce((a,b)=>a+b,0) %> משאיות <%= region === 'מצרים' ? 'ממצרים' : 'מישראל' %></p>
+
+          <% if (routeSummary[region].routes) { %>
+            <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
+              <p class="status-line">📦 <%= routeName %> – <%= count?.total || 0 %> משאיות</p>
+              <% if (count?.byOrg) { %>
+                <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
+                  <p class="status-line">• <%= org %> – <%= orgCount %> משאיות</p>
+                <% }) %>
+              <% } %>
+            <% }) %>
+          <% } %>
+
+          <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
+            <p class="status-refused-title">משאיות מסורבות מ<%= region %>:</p>
+            <% routeSummary[region].refused.forEach((item, index) => { %>
+              <p class="status-refused-line"><%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %></p>
+            <% }) %>
+          <% } %>
+
+          <p class="status-summary">סה"כ נכנסו <%= routeSummary[region].totalPassed || 0 %> משאיות מ<%= region %></p>
         </div>
       <% } %>
     <% }) %>
+  </div>
+<% } %>
   </div>
 <% } %>
     </h3>

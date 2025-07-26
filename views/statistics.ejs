@@ -1,3 +1,4 @@
+
                                         <!DOCTYPE html>
                                         <html lang="he" dir="rtl">
                                         <head>
@@ -156,7 +157,211 @@
                                           background-color: #002c5f;
                                         }
 
-                                          </style>
+.status-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 30px 0;
+  justify-content: center;
+}
+
+.status-box {
+  background: linear-gradient(to bottom, #eaf3ff, #ffffff);
+  border: 1px solid #a0c4ff;
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  direction: rtl;
+  text-align: right;
+  transition: 0.3s ease;
+}
+
+.status-box:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.status-title {
+  font-weight: bold;
+  font-size: 22px;
+  color: #003366;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #004080;
+  padding-bottom: 6px;
+}
+
+.status-item {
+  font-size: 17px;
+  margin-bottom: 8px;
+  color: #333;
+  line-height: 1.7;
+}
+
+.status-sub {
+  font-size: 15px;
+  color: #d32f2f;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+.status-summary {
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #004080;
+  border-top: 1px dashed #999;
+  padding-top: 10px;
+}
+.status-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.status-box {
+  background-color: #f0f4ff;
+  border: 1px solid #c2d3ff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  direction: rtl;
+  font-family: 'Assistant', sans-serif;
+}
+
+.status-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #003366;
+  border-bottom: 1px solid #a0a0a0;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  text-align: right;
+}
+
+.status-line {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #222;
+  text-align: right;
+}
+
+.status-refused-title {
+  font-weight: bold;
+  color: #b00020;
+  margin-top: 14px;
+  text-align: right;
+}
+
+.status-refused-line {
+  font-size: 15px;
+  color: #b00020;
+  margin-bottom: 4px;
+  text-align: right;
+}
+
+.status-summary {
+  font-size: 16px;
+  font-weight: bold;
+  color: #004080;
+  border-top: 1px dashed #999;
+  margin-top: 16px;
+  padding-top: 10px;
+  text-align: right;
+}
+.summary-table {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  padding: 20px;
+  width: fit-content;
+  margin: 0 auto 30px auto;
+  direction: rtl;
+  text-align: right;
+  font-family: 'Assistant', sans-serif;
+}
+
+.table-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 14px;
+  border-bottom: 2px solid #003366;
+  padding-bottom: 6px;
+}
+
+.org-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.org-table th {
+  background-color: #004080;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.org-table td {
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.org-table tfoot td {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+
+
+
+
+
+.status-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.status-box {
+  background-color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+  min-width: 280px;
+  max-width: 360px;
+  text-align: right;
+  font-family: 'Assistant', sans-serif;
+  position: relative;
+}
+
+.status-box h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #003366;
+  border-bottom: 2px solid #003366;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.status-box p {
+  font-size: 16px;
+  margin: 4px 0;
+}
+
+.status-box .footer {
+  border-top: 1px solid #ccc;
+  padding-top: 8px;
+  margin-top: 12px;
+  font-weight: bold;
+  color: #444;
+}
+</style>
                                         </head>
                                         <body>
 
@@ -225,33 +430,72 @@
                                         %>
 
 
+
+<% if (routeSummary && Object.keys(routeSummary).length > 0) { %>
+  <div class="status-section">
+    <% ['ישראל', 'מצרים'].forEach(region => { %>
+      <% if (routeSummary[region]) { %>
+        <div class="status-box">
+          <h3>סטטוס - <%= region %><% if (region === 'מצרים') { %> 🇪🇬 <% } %></h3>
+          <% Object.entries(routeSummary[region]).forEach(([donor, count]) => { %>
+            <p><%= donor %> - <%= count %> משאיות</p>
+          <% }) %>
+          <p class="footer">סה"כ נכנסו <%= Object.values(routeSummary[region]).reduce((a,b)=>a+b,0) %> משאיות <%= region === 'מצרים' ? 'ממצרים' : 'מישראל' %></p>
+        </div>
+      <% } %>
+    <% }) %>
+  </div>
+<% } %>
+    </h3>
+          <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
+            <p class="status-line">📦 <%= routeName %> – <%= count.total %> משאיות</p>
+            <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
+              <p class="status-line">• <%= org %> – <%= orgCount %> משאיות</p>
+            <% }) %>
+          <% }) %>
+          <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
+            <p class="status-refused-title">משאיות מסורבות מ<%= region %>:</p>
+            <% routeSummary[region].refused.forEach((item, index) => { %>
+              <p class="status-refused-line"><%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %></p>
+            <% }) %>
+          <% } %>
+          <p class="status-summary">סה\"כ נכנסו <%= routeSummary[region].totalPassed %> משאיות מ<%= region %></p>
+        </div>
+      <% } %>
+    <% }) %>
+  </div>
+<% } %>
+
+<div class="summary-table">
+  <div class="table-title">
+    <i class="fa-solid fa-chart-column"></i> פילוח לפי ארגון תורם
+  </div>
+  <table class="org-table">
+    <thead>
+      <tr>
+        <th>ארגון</th>
+        <th>כמות</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% Object.entries(orgStats).forEach(([org, count]) => { %>
+        <tr>
+          <td><%= org %></td>
+          <td><%= count %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><strong>סה\"כ</strong></td>
+        <td><strong><%= Object.values(orgStats).reduce((a,b)=>a+b,0) %></strong></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
                                         <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px;">
 
-
-                                        <% if (routeSummary && Object.keys(routeSummary).length > 0) { %>
-                                          <% ['ישראל', 'מצרים'].forEach(region => { %>
-                                            <% if (routeSummary[region]) { %>
-                                              <div class="status-box">
-                                                <div class="status-title">סטטוס - <%= region %> <% if(region === 'מצרים'){ %>🇪🇬<% } %></div>
-                                                <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
-                                                  <div class="status-item"><%= routeName %> - <%= count.total %> משאיות</div>
-                                                  <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
-                                                    <div class="status-item">* <%= org %> - <%= orgCount %> משאיות</div>
-                                                  <% }) %>
-                                                <% }) %>
-                                                <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
-                                                  <div class="status-sub">*משאיות מסורבות מ<%= region %>*</div>
-                                                  <% routeSummary[region].refused.forEach((item, index) => { %>
-                                                    <div class="status-item">
-                                                      <%= index + 1 %>. תיאום <%= item.coordinationNumber %> - ארגון <%= item.donorOrg %> - <%= item.reason %>
-                                                    </div>
-                                                  <% }) %>
-                                                <% } %>
-                                                <div class="status-summary">*סה"כ נכנסו <%= routeSummary[region].totalPassed %> משאיות מ<%= region %>*</div>
-                                              </div>
-                                            <% } %>
-                                          <% }) %>
-                                        <% } %>
 
 
                                           <!-- כרטיס סירובים -->

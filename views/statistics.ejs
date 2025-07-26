@@ -1,5 +1,4 @@
-
-                                        <!DOCTYPE html>
+<!DOCTYPE html>
                                         <html lang="he" dir="rtl">
                                         <head>
                                           <meta charset="UTF-8">
@@ -428,89 +427,147 @@
                                           const refusedCount = (refusedCoordinations && refusedCoordinations.length) ? refusedCoordinations.length : 0;
                                           const totalDrivers = passedDrivers.length - refusedCount;
                                         %>
-
-
-
-<% if (routeSummary && Object.keys(routeSummary).length > 0) { %>
-  <div class="status-section">
-    <% ['ישראל', 'מצרים'].forEach(region => { %>
-      <% if (routeSummary[region]) { %>
-        <div class="status-box">
-          <h3>סטטוס - <%= region %><% if (region === 'מצרים') { %> 🇪🇬 <% } %></h3>
-
-          <% if (routeSummary[region].routes) { %>
-            <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
-              <p class="status-line">📦 <%= routeName %> – <%= count?.total || 0 %> משאיות</p>
-              <% if (count?.byOrg) { %>
-                <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
-                  <p class="status-line">• <%= org %> – <%= orgCount %> משאיות</p>
-                <% }) %>
-              <% } %>
-            <% }) %>
-          <% } %>
-
-          <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
-            <p class="status-refused-title">משאיות מסורבות מ<%= region %>:</p>
-            <% routeSummary[region].refused.forEach((item, index) => { %>
-              <p class="status-refused-line"><%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %></p>
-            <% }) %>
-          <% } %>
-
-          <p class="status-summary">סה"כ נכנסו <%= routeSummary[region].totalPassed || 0 %> משאיות מ<%= region %></p>
-        </div>
-      <% } %>
-    <% }) %>
-  </div>
-<% } %>
-  </div>
-<% } %>
-    </h3>
-          <% Object.entries(routeSummary[region].routes).forEach(([routeName, count]) => { %>
-            <p class="status-line">📦 <%= routeName %> – <%= count.total %> משאיות</p>
+<div class="summary-table">
+  <div class="table-title">סטטוס לפי מוצא: ישראל</div>
+  <% if (routeSummary && routeSummary['ישראל']) { %>
+    <table class="org-table">
+      <tbody>
+        <% Object.entries(routeSummary['ישראל'].routes || {}).forEach(([routeName, count]) => { %>
+          <tr>
+            <td>📦 <%= routeName %></td>
+            <td><%= count.total || 0 %> משאיות</td>
+          </tr>
+          <% if (count.byOrg) { %>
             <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
-              <p class="status-line">• <%= org %> – <%= orgCount %> משאיות</p>
-            <% }) %>
-          <% }) %>
-          <% if (routeSummary[region].refused && routeSummary[region].refused.length > 0) { %>
-            <p class="status-refused-title">משאיות מסורבות מ<%= region %>:</p>
-            <% routeSummary[region].refused.forEach((item, index) => { %>
-              <p class="status-refused-line"><%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %></p>
+              <tr>
+                <td>• <%= org %></td>
+                <td><%= orgCount %> משאיות</td>
+              </tr>
             <% }) %>
           <% } %>
-          <p class="status-summary">סה\"כ נכנסו <%= routeSummary[region].totalPassed %> משאיות מ<%= region %></p>
-        </div>
-      <% } %>
-    <% }) %>
-  </div>
-<% } %>
+        <% }) %>
+        <tr>
+          <td colspan="2" style="font-weight: bold; color: #004080;">
+            סה"כ נכנסו <%= routeSummary['ישראל'].totalPassed || 0 %> משאיות מישראל
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>לא נמצאו נתונים מישראל.</p>
+  <% } %>
+</div>
 
 <div class="summary-table">
-  <div class="table-title">
-    <i class="fa-solid fa-chart-column"></i> פילוח לפי ארגון תורם
-  </div>
-  <table class="org-table">
-    <thead>
-      <tr>
-        <th>ארגון</th>
-        <th>כמות</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% Object.entries(orgStats).forEach(([org, count]) => { %>
+  <div class="table-title">סטטוס לפי מוצא: מצרים 🇪🇬</div>
+  <% if (routeSummary && routeSummary['מצרים']) { %>
+    <table class="org-table">
+      <tbody>
+        <% Object.entries(routeSummary['מצרים'].routes || {}).forEach(([routeName, count]) => { %>
+          <tr>
+            <td>📦 <%= routeName %></td>
+            <td><%= count.total || 0 %> משאיות</td>
+          </tr>
+          <% if (count.byOrg) { %>
+            <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
+              <tr>
+                <td>• <%= org %></td>
+                <td><%= orgCount %> משאיות</td>
+              </tr>
+            <% }) %>
+          <% } %>
+        <% }) %>
+        <% if (routeSummary['מצרים'].refused && routeSummary['מצרים'].refused.length > 0) { %>
+          <tr>
+            <td colspan="2" class="status-refused-title">🚫 סירובים ממצרים:</td>
+          </tr>
+          <% routeSummary['מצרים'].refused.forEach((item, index) => { %>
+            <tr>
+              <td colspan="2" class="status-refused-line">
+                <%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %>
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
         <tr>
-          <td><%= org %></td>
-          <td><%= count %></td>
+          <td colspan="2" style="font-weight: bold; color: #004080;">
+            סה"כ נכנסו <%= routeSummary['מצרים'].totalPassed || 0 %> משאיות ממצרים
+          </td>
         </tr>
-      <% }) %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td><strong>סה\"כ</strong></td>
-        <td><strong><%= Object.values(orgStats).reduce((a,b)=>a+b,0) %></strong></td>
-      </tr>
-    </tfoot>
-  </table>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>לא נמצאו נתונים ממצרים.</p>
+  <% } %>
 </div>
+
+  </div>
+
+<% if (routeSummary && Object.keys(routeSummary).length > 0) { %>
+
+  <% if (routeSummary['ישראל']) { %>
+    <div class="summary-table">
+      <div class="table-title">סטטוס לפי מוצא: ישראל</div>
+      <table class="org-table">
+        <tbody>
+          <% Object.entries(routeSummary['ישראל'].routes || {}).forEach(([routeName, count]) => { %>
+            <tr>
+              <td>📦 <%= routeName %></td>
+              <td><%= count.total || 0 %> משאיות</td>
+            </tr>
+            <% if (count.byOrg) { %>
+              <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
+                <tr>
+                  <td>• <%= org %></td>
+                  <td><%= orgCount %> משאיות</td>
+                </tr>
+              <% }) %>
+            <% } %>
+          <% }) %>
+          <tr>
+            <td colspan="2" style="font-weight: bold; color: #004080;">
+              סה"כ נכנסו <%= routeSummary['ישראל'].totalPassed || 0 %> משאיות מישראל
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <% if (routeSummary['מצרים']) { %>
+    <div class="summary-table">
+      <div class="table-title">סטטוס לפי מוצא: מצרים 🇪🇬</div>
+      <table class="org-table">
+        <tbody>
+          <% Object.entries(routeSummary['מצרים'].routes || {}).forEach(([routeName, count]) => { %>
+            <tr>
+              <td>📦 <%= routeName %></td>
+              <td><%= count.total || 0 %> משאיות</td>
+            </tr>
+            <% if (count.byOrg) { %>
+              <% Object.entries(count.byOrg).forEach(([org, orgCount]) => { %>
+                <tr>
+                  <td>• <%= org %></td>
+                  <td><%= orgCount %> משאיות</td>
+                </tr>
+              <% }) %>
+            <% } %>
+          <% }) %>
+
+          <% if (routeSummary['מצרים'].refused && routeSummary['מצרים'].refused.length > 0) { %>
+            <tr>
+              <td colspan="2" class="status-refused-title">🚫 סירובים ממצרים:</td>
+            </tr>
+            <% routeSummary['מצרים'].refused.forEach((item, index) => { %>
+              <tr>
+                <td colspan="2" class="status-refused-line">
+                  <%= index + 1 %>. תיאום <%= item.coordinationNumber %> – ארגון <%= item.donorOrg %> – <%= item.reason %>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+
+          <tr>
 
                                         <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px;">
 

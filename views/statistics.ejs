@@ -225,63 +225,56 @@ passedDrivers.forEach(driver => {
 %>
 
 
-<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px;">
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px;">
+    <% ['ישראל', 'מצרים'].forEach(area => { %>
+      <div style="width: 520px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h3 style="margin-top: 0; margin-bottom: 20px; color: #004080; text-align: right;">
+          <span style="display: inline-flex; align-items: center; gap: 10px;">
+            <% if (area === 'ישראל') { %>
+              <img src="https://cdn.jsdelivr.net/npm/svg-country-flags@1.2.10/svg/il.svg" alt="דגל ישראל" style="width: 22px; height: 16px; border-radius: 2px;">
+              ישראל
+            <% } else { %>
+              <img src="https://cdn.jsdelivr.net/npm/svg-country-flags@1.2.10/svg/eg.svg" alt="דגל מצרים" style="width: 22px; height: 16px; border-radius: 2px;">
+              מצרים
+            <% } %>
+          </span>
+        </h3>
 
-  <!-- פילוח לפי ארגון -->
-  <div style="width: 420px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <h3 style="margin-top: 0; color: #004080; text-align: right;">📊 פילוח לפי ארגון תורם</h3>
-<table style="width: 100%; border-collapse: collapse; font-size: 15px;">
-  <thead>
-    <tr style="background-color: #004080; color: white; font-weight: bold;">
-      <th style="text-align: right; padding: 8px;">ארגון</th>
-      <th style="text-align: center; padding: 8px;">כמות</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% let totalOrg = 0; %>
-  <% Object.entries(orgStats).forEach(function([org, count]) { totalOrg += count; %>
-    <tr style="border-bottom: 1px solid #ddd; color: #222; font-weight: 500;">
-      <td style="text-align: right; padding: 8px;"><%= org %></td>
-      <td style="text-align: center; padding: 8px;"><%= count %></td>
-    </tr>
-  <% }); %>
-  <tr style="font-weight: bold; background: #f0f0f0; color: #000;">
-    <td style="text-align: right; padding: 8px;">סה"כ</td>
-    <td style="text-align: center; padding: 8px;"><%= totalOrg %></td>
-  </tr>
-</tbody>
-</table>
 
+        <% const relevantDrivers = passedDrivers.filter(d => (area === 'ישראל' ? d.route !== 'מצרים' : d.route === 'מצרים')); %>
+        <% const routesMap = {}; %>
+        <% relevantDrivers.forEach(driver => {
+          if (!routesMap[driver.route]) routesMap[driver.route] = {};
+          const org = driver.donorOrg || 'ללא ארגון';
+          routesMap[driver.route][org] = (routesMap[driver.route][org] || 0) + 1;
+        }); %>
+
+        <% Object.entries(routesMap).forEach(([routeName, orgs]) => { %>
+          <% const totalTrucks = Object.values(orgs).reduce((a, b) => a + b, 0); %>
+          <p style="font-weight: bold; margin-bottom: 5px;"><%= routeName %> – <%= totalTrucks %> משאיות</p>
+          <ul style="margin-top: 0; margin-bottom: 15px; padding-right: 20px;">
+            <% Object.entries(orgs).forEach(([org, count]) => { %>
+              <li><%= count %> משאיות <%= org %></li>
+            <% }); %>
+          </ul>
+        <% }); %>
+
+        <% const refused = refusedCoordinations.filter(r => (area === 'ישראל' ? r.route !== 'מצרים' : r.route === 'מצרים')); %>
+        <% if (refused.length > 0) { %>
+          <p style="color: #b00020; font-weight: bold;">🚫 מסורבות מ<%= area %>:</p>
+          <ol style="padding-right: 20px;">
+            <% refused.forEach(item => { %>
+              <li>תיאום <%= item.coordinationNumber %> – <%= item.donorOrg %> – <%= item.reason %></li>
+            <% }); %>
+          </ol>
+        <% } %>
+
+        <% const passedCount = relevantDrivers.length; %>
+        <p style="font-weight: bold; color: #1d6f42;">✅ סה"כ נכנסו <%= passedCount %> משאיות מ<%= area %></p>
+      </div>
+    <% }); %>
   </div>
 
-  <!-- פילוח לפי נתיב -->
-  <div style="width: 420px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <h3 style="margin-top: 0; color: #004080; text-align: right;">🛣️ פילוח לפי נתיב</h3>
-   <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
-  <thead>
-    <tr style="background-color: #004080; color: white; font-weight: bold;">
-      <th style="text-align: right; padding: 8px;">נתיב</th>
-      <th style="text-align: center; padding: 8px;">כמות</th>
-    </tr>
-  </thead>
- <tbody>
-  <% let totalRoute = 0; %>
-  <% Object.entries(routeStats).forEach(function([route, count]) { totalRoute += count; %>
-    <tr style="border-bottom: 1px solid #ddd; color: #222; font-weight: 500;">
-      <td style="text-align: right; padding: 8px;"><%= route %></td>
-      <td style="text-align: center; padding: 8px;"><%= count %></td>
-    </tr>
-  <% }); %>
-  <tr style="font-weight: bold; background: #f0f0f0; color: #000;">
-    <td style="text-align: right; padding: 8px;">סה"כ</td>
-    <td style="text-align: center; padding: 8px;"><%= totalRoute %></td>
-  </tr>
-</tbody>
-
-</table>
-
-  </div>
-</div>
 
   <!-- כרטיס סירובים -->
   <% if (refusedCoordinations && refusedCoordinations.length > 0) { %>
